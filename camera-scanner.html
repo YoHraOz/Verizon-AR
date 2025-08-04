@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verizon Router Scanner - Smart Home Management</title>
+    
+    <!-- Google's <model-viewer> component -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    
+    <style>
+        :root {
+            --verizon-red: #CD040B;
+            --verizon-dark-red: #a3030a;
+            --verizon-white: #ffffff;
+            --verizon-black: #000000;
+            --verizon-dark-grey: #1a1a1a;
+            --verizon-light-grey: #f4f4f4;
+            --accent-green: #28a745; /* Keep for success states */
+            --text-grey: #666666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--verizon-black) 0%, var(--verizon-dark-grey) 100%);
+            color: var(--verizon-white);
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .scanner-header {
+            background: var(--verizon-red);
+            padding: 20px;
+            border-bottom: 2px solid var(--verizon-dark-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(205, 4, 11, 0.3);
+        }
+        
+        .scanner-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--verizon-white);
+        }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--verizon-white);
+            color: var(--verizon-white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-btn:hover {
+            background: var(--verizon-white);
+            color: var(--verizon-red);
+            transform: translateY(-2px);
+        }
+        
+        /* Main Container */
+        .scanner-container {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Scanner Section */
+        .scanner-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .scanner-intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .scanner-intro h2 {
+            color: var(--verizon-red);
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .scanner-intro p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--verizon-light-grey);
+            margin-bottom: 10px;
+        }
+        
+        /* Camera View */
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--verizon-dark-grey);
+            border: 3px solid var(--verizon-red);
+            box-shadow: 0 8px 30px rgba(205, 4, 11, 0.3);
+        }
+        
+        #camera-feed {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .scan-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 200px;
+            border: 3px dashed var(--verizon-red);
+            border-radius: 15px;
+            animation: pulse-scan 2s infinite;
+        }
+        
+        @keyframes pulse-scan {
+            0%, 100% { 
+                opacity: 0.6; 
+                transform: translate(-50%, -50%) scale(1);
+                border-color: var(--verizon-red);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.05);
+                border-color: var(--verizon-white);
+            }
+        }
+        
+        .scan-instruction {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--verizon-white);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid var(--verizon-red);
+        }
+        
+        /* Scanner Controls */
+        .scanner-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .scanner-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+        
+        .scan-btn {
+            background: var(--verizon-red);
+            color: var(--verizon-white);
+            font-weight: 700;
+        }
+        
+        .scan-btn:hover {
+            background: var(--verizon-dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(205, 4, 11, 0.4);
+        }
+        
+        .scan-btn:disabled {
+            background: var(--text-grey);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .demo-btn {
+            background: transparent;
+            color: var(--verizon-red);
+            border: 2px solid var(--verizon-red);
+            font-weight: 600;
+        }
+        
+        .demo-btn:hover {
+            background: var(--verizon-red);
+            color: var(--verizon-white);
+        }
+        
+        /* Scanner Status */
+        .scanner-status {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .scanner-status.scanning {
+            background: rgba(205, 4, 11, 0.1);
+            border: 2px solid var(--verizon-red);
+        }
+        
+        .scanner-status.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid var(--accent-green);
+        }
+        
+        .scanner-status.error {
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid #8B0000;
+        }
+        
+        .status-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .status-message {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .status-detail {
+            color: var(--verizon-light-grey);
+            font-size: 1em;
+        }
+        
+        /* AR Experience Section */
+        .ar-experience {
+            display: none;
+            background: linear-gradient(135deg, var(--verizon-dark-grey) 0%, var(--verizon-black) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 20px;
+            border: 2px solid var(--verizon-red);
+            box-shadow: 0 8px 30px rgba(205, 4, 11, 0.2);
+        }
+        
+        .ar-experience.active {
+            display: block;
+        }
+        
+        .ar-experience h3 {
+            color: var(--verizon-red);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        .experience-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .experience-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(205, 4, 11, 0.05) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .experience-card:hover {
+            border-color: var(--verizon-red);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(205, 4, 11, 0.3);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(205, 4, 11, 0.1) 100%);
+        }
+        
+        .experience-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: var(--verizon-red);
+        }
+        
+        .experience-card h4 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+            color: var(--verizon-white);
+            font-weight: 600;
+        }
+        
+        .experience-card p {
+            color: var(--verizon-light-grey);
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        /* 3D Model Container */
+        .model-container {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, var(--verizon-black) 0%, var(--verizon-dark-grey) 100%);
+            border-radius: 15px;
+            border: 2px solid var(--verizon-red);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(205, 4, 11, 0.2);
+        }
+        
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+        
+        /* Green Hotspots - Keep green for management features */
+        .management-hotspot {
+            background: var(--accent-green);
+            border: 3px solid var(--verizon-white);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse-green 2s infinite;
+            position: relative;
+            pointer-events: auto !important;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--verizon-white);
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .management-hotspot:hover {
+            transform: scale(1.3);
+            background: #1e7e34;
+            border-color: var(--verizon-red);
+        }
+        
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(40, 167, 69, 0); }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--verizon-dark-grey) 0%, var(--verizon-black) 100%);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--verizon-red);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(205, 4, 11, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--verizon-red);
+        }
+        
+        .modal-header h3 {
+            color: var(--verizon-red);
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--verizon-light-grey);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: var(--verizon-red);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--verizon-white);
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .action-btn {
+            background: var(--verizon-red);
+            color: var(--verizon-white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--verizon-dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(205, 4, 11, 0.4);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .scanner-container {
+                padding: 15px;
+            }
+            
+            .scanner-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .scanner-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .experience-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+        
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--verizon-red);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Floating Action Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .floating-btn {
+            background: var(--verizon-red);
+            color: var(--verizon-white);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(205, 4, 11, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .floating-btn:hover {
+            background: var(--verizon-dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(205, 4, 11, 0.6);
+        }
+        
+        .floating-btn.secondary {
+            background: var(--verizon-white);
+            color: var(--verizon-red);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--verizon-red);
+        }
+        
+        .floating-btn.secondary:hover {
+            background: var(--verizon-light-grey);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.5);
+        }
+        
+        .floating-btn .icon {
+            font-size: 18px;
+        }
+        
+        /* Mobile responsive for floating buttons */
+        @media (max-width: 768px) {
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .floating-btn {
+                min-width: auto;
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="scanner-header">
+        <h1 class="scanner-title">📱 Smart Router Scanner</h1>
+        <a href="index.html" class="back-btn">← Back to AR Experience</a>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="scanner-container">
+        <!-- Scanner Section -->
+        <div class="scanner-section">
+            <div class="scanner-intro">
+                <h2>🎯 Scan Your Verizon Router</h2>
+                <p>Point your camera at your Verizon 5G router to access smart management features</p>
+                <p>Manage your account, install accessories, upgrade plans, and get support - all through AR!</p>
+                <div style="background: linear-gradient(135deg, rgba(205, 4, 11, 0.1) 0%, rgba(205, 4, 11, 0.05) 100%); border: 2px solid var(--verizon-red); border-radius: 15px; padding: 20px; margin: 25px 0; text-align: center; box-shadow: 0 4px 15px rgba(205, 4, 11, 0.2);">
+                    <strong style="color: var(--verizon-red); font-size: 1.1em;">🏠 Perfect for existing customers!</strong><br>
+                    <span style="font-size: 0.95em; color: var(--verizon-light-grey); margin-top: 8px; display: block;">Already have your router? This feature unlocks advanced management tools through your camera.</span>
+                </div>
+            </div>
+            
+            <!-- Camera View -->
+            <div class="camera-container">
+                <video id="camera-feed" autoplay playsinline muted></video>
+                <div class="camera-overlay">
+                    <div class="scan-frame"></div>
+                    <div class="scan-instruction" id="scan-instruction">
+                        Position your router within the frame
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scanner Controls -->
+            <div class="scanner-controls">
+                <button class="scanner-btn scan-btn" id="start-scan-btn">
+                    📷 Start Camera Scan
+                </button>
+                <button class="scanner-btn demo-btn" id="demo-mode-btn">
+                    🎮 Demo Mode
+                </button>
+            </div>
+            
+            <!-- Scanner Status -->
+            <div class="scanner-status" id="scanner-status" style="display: none;">
+                <span class="status-icon" id="status-icon">🔍</span>
+                <div class="status-message" id="status-message">Initializing scanner...</div>
+                <div class="status-detail" id="status-detail">Please wait while we prepare the camera</div>
+            </div>
+        </div>
+        
+        <!-- AR Experience Section -->
+        <div class="ar-experience" id="ar-experience">
+            <h3>🎯 Router Detected! Choose Your Experience</h3>
+            
+            <div class="experience-options">
+                <div class="experience-card" onclick="openManagementExperience()">
+                    <div class="icon">💼</div>
+                    <h4>Account Management</h4>
+                    <p>View usage, manage devices, update settings, and control your network</p>
+                </div>
+                
+                <div class="experience-card" onclick="openInstallationExperience()">
+                    <div class="icon">🔧</div>
+                    <h4>Installation & Setup</h4>
+                    <p>Get help with accessories, mounting, and optimizing your router placement</p>
+                </div>
+                
+                <div class="experience-card" onclick="openUpgradeExperience()">
+                    <div class="icon">⬆️</div>
+                    <h4>Plans & Upgrades</h4>
+                    <p>Upgrade your plan, add accessories, or explore premium features</p>
+                </div>
+                
+                <div class="experience-card" onclick="openSupportExperience()">
+                    <div class="icon">🛠️</div>
+                    <h4>Customer Support</h4>
+                    <p>Get help, run diagnostics, or connect with technical support</p>
+                </div>
+            </div>
+            
+            <!-- 3D Model with Green Hotspots -->
+            <div class="model-container">
+                <model-viewer
+                    id="router-viewer"
+                    src="./final_router.glb"
+                    ios-src="./final_router.glb"
+                    alt="Your Verizon 5G Router"
+                    camera-controls
+                    camera-orbit="45deg 75deg 4m"
+                    min-camera-orbit="auto auto 2m"
+                    max-camera-orbit="auto auto 8m"
+                    field-of-view="35deg"
+                    shadow-intensity="1"
+                    shadow-softness="0.5"
+                    environment-image="neutral"
+                    exposure="1"
+                    autoplay
+                    interaction-prompt="auto">
+                    
+                    <!-- Management Hotspots -->
+                    <button class="management-hotspot" slot="hotspot-account" data-position="0.8 0.4 0.2" data-normal="0 1 0" onclick="openAccountModal()">
+                        💼
+                    </button>
+                    
+                    <button class="management-hotspot" slot="hotspot-install" data-position="-0.8 0.4 0.2" data-normal="0 1 0" onclick="openInstallModal()">
+                        🔧
+                    </button>
+                    
+                    <button class="management-hotspot" slot="hotspot-upgrade" data-position="0 0.7 0.8" data-normal="0 0 1" onclick="openUpgradeModal()">
+                        ⬆️
+                    </button>
+                    
+                    <button class="management-hotspot" slot="hotspot-support" data-position="0 -0.5 -0.8" data-normal="0 0 -1" onclick="openSupportModal()">
+                        🛠️
+                    </button>
+                </model-viewer>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Account Management Modal -->
+    <div id="account-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>💼 Account Management</h3>
+                <button class="modal-close" onclick="closeModal('account-modal')">&times;</button>
+            </div>
+            <p>Manage your Verizon 5G account and connected devices:</p>
+            <ul class="feature-list">
+                <li>📊 View current plan and data usage</li>
+                <li>📱 Manage connected devices (12 devices)</li>
+                <li>💳 Update payment methods and billing</li>
+                <li>📈 View network performance analytics</li>
+                <li>⚙️ Configure advanced network settings</li>
+                <li>🏠 Set up guest networks and parental controls</li>
+            </ul>
+            <button class="action-btn" onclick="launchAccountDashboard()">
+                Open Account Dashboard
+            </button>
+        </div>
+    </div>
+    
+    <!-- Installation Modal -->
+    <div id="install-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🔧 Installation & Setup</h3>
+                <button class="modal-close" onclick="closeModal('install-modal')">&times;</button>
+            </div>
+            <p>Get help with your router setup and accessories:</p>
+            <ul class="feature-list">
+                <li>📍 Optimize router placement for best coverage</li>
+                <li>🔌 Install and configure accessories</li>
+                <li>📡 Set up mesh network extenders</li>
+                <li>🏗️ Wall mounting and cable management</li>
+                <li>📶 Signal strength testing and optimization</li>
+                <li>🎯 AR-guided installation assistance</li>
+            </ul>
+            <button class="action-btn" onclick="launchInstallationGuide()">
+                Start Installation Guide
+            </button>
+        </div>
+    </div>
+    
+    <!-- Upgrade Modal -->
+    <div id="upgrade-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⬆️ Plans & Upgrades</h3>
+                <button class="modal-close" onclick="closeModal('upgrade-modal')">&times;</button>
+            </div>
+            <p>Explore upgrade options for your Verizon 5G service:</p>
+            <ul class="feature-list">
+                <li>🚀 Upgrade to Unlimited Ultimate (2GB speeds)</li>
+                <li>🔥 Add more mobile hotspot data (current: 50GB)</li>
+                <li>📺 Include premium streaming bundles</li>
+                <li>🌍 Add international calling and data</li>
+                <li>☁️ Increase cloud storage (current: 50GB)</li>
+                <li>🛡️ Add advanced security and protection</li>
+            </ul>
+            <button class="action-btn" onclick="launchUpgradeShop()">
+                Browse Upgrades
+            </button>
+        </div>
+    </div>
+    
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛠️ Customer Support</h3>
+                <button class="modal-close" onclick="closeModal('support-modal')">&times;</button>
+            </div>
+            <p>Get help with your Verizon 5G service:</p>
+            <ul class="feature-list">
+                <li>📞 Connect with technical support (available 24/7)</li>
+                <li>💬 Start live chat with specialist</li>
+                <li>🔍 Run automatic network diagnostics</li>
+                <li>📖 Access setup and troubleshooting guides</li>
+                <li>📱 Remote assistance and screen sharing</li>
+                <li>📍 Find your nearest Verizon store</li>
+            </ul>
+            <button class="action-btn" onclick="launchSupport()">
+                Get Support Now
+            </button>
+        </div>
+    </div>
+    
+    <!-- Floating Action Buttons -->
+    <div class="floating-buttons">
+        <button class="floating-btn" id="try-ar-btn" onclick="tryInRoom()">
+            <span class="icon">🏠</span>
+            Try in Your Room
+        </button>
+        <button class="floating-btn secondary" id="scan-router-btn" onclick="quickScanRouter()">
+            <span class="icon">📱</span>
+            Scan Your Router
+        </button>
+    </div>
+    
+    <script>
+        // Camera and scanning state
+        let stream = null;
+        let isScanning = false;
+        let scanningSimulation = null;
+        
+        // DOM elements
+        const cameraFeed = document.getElementById('camera-feed');
+        const startScanBtn = document.getElementById('start-scan-btn');
+        const demoModeBtn = document.getElementById('demo-mode-btn');
+        const scannerStatus = document.getElementById('scanner-status');
+        const statusIcon = document.getElementById('status-icon');
+        const statusMessage = document.getElementById('status-message');
+        const statusDetail = document.getElementById('status-detail');
+        const scanInstruction = document.getElementById('scan-instruction');
+        const arExperience = document.getElementById('ar-experience');
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            checkCameraPermissions();
+        });
+        
+        function setupEventListeners() {
+            startScanBtn.addEventListener('click', startCameraScan);
+            demoModeBtn.addEventListener('click', startDemoMode);
+        }
+        
+        async function checkCameraPermissions() {
+            try {
+                const permissions = await navigator.permissions.query({ name: 'camera' });
+                if (permissions.state === 'denied') {
+                    showStatus('error', '❌', 'Camera Access Denied', 'Please enable camera permissions to scan your router');
+                }
+            } catch (e) {
+                console.log('Permissions API not supported');
+            }
+        }
+        
+        async function startCameraScan() {
+            if (isScanning) {
+                stopScanning();
+                return;
+            }
+            
+            try {
+                showStatus('scanning', '📷', 'Starting Camera...', 'Requesting camera access');
+                startScanBtn.disabled = true;
+                
+                // Request camera access
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'environment', // Use back camera on mobile
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                });
+                
+                cameraFeed.srcObject = stream;
+                isScanning = true;
+                startScanBtn.textContent = '⏹️ Stop Scanning';
+                startScanBtn.disabled = false;
+                
+                showStatus('scanning', '🔍', 'Scanning for Router...', 'Point your camera at your Verizon router');
+                scanInstruction.textContent = 'Hold steady - scanning for router...';
+                
+                // Start mock scanning simulation
+                startScanningSimulation();
+                
+            } catch (error) {
+                console.error('Camera access error:', error);
+                showStatus('error', '❌', 'Camera Access Failed', 'Unable to access camera. Please check permissions.');
+                startScanBtn.disabled = false;
+            }
+        }
+        
+        function startScanningSimulation() {
+            let scanProgress = 0;
+            const scanMessages = [
+                'Analyzing image for router patterns...',
+                'Detecting device shape and form factor...',
+                'Identifying Verizon router model and LED indicators...',
+                'Verifying device authenticity and serial number...',
+                'Loading your personalized router management features...',
+                'Router recognized! Initializing smart controls...'
+            ];
+            
+            // Hide scan button during scanning
+            updateFloatingButtons('scanning');
+            
+            scanningSimulation = setInterval(() => {
+                scanProgress++;
+                
+                if (scanProgress <= scanMessages.length) {
+                    statusDetail.textContent = scanMessages[scanProgress - 1];
+                    
+                    if (scanProgress === 3) {
+                        // Add visual feedback - router detected
+                        document.querySelector('.scan-frame').style.borderColor = '#CD040B';
+                        document.querySelector('.scan-frame').style.animation = 'pulse-scan 0.5s infinite';
+                        addScanSuccessEffect();
+                    }
+                    
+                    if (scanProgress === 5) {
+                        // Change status to success
+                        showStatus('success', '✅', 'Router Detected!', scanMessages[scanProgress - 1]);
+                    }
+                } else {
+                    // Scanning complete
+                    clearInterval(scanningSimulation);
+                    routerDetected();
+                }
+            }, 1800); // Slightly longer intervals for more realistic feel
+        }
+        
+        function routerDetected() {
+            showStatus('success', '✅', 'Router Detected!', 'Verizon 5G Home Router successfully identified');
+            scanInstruction.textContent = 'Router detected! Initializing management features...';
+            
+            // Stop camera after detection
+            setTimeout(() => {
+                stopScanning();
+                showArExperience();
+            }, 2000);
+        }
+        
+        function stopScanning() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            
+            if (scanningSimulation) {
+                clearInterval(scanningSimulation);
+                scanningSimulation = null;
+            }
+            
+            isScanning = false;
+            startScanBtn.textContent = '📷 Start Camera Scan';
+            startScanBtn.disabled = false;
+            cameraFeed.srcObject = null;
+            
+            // Show scan button again
+            updateFloatingButtons('idle');
+            
+            hideStatus();
+        }
+        
+        function startDemoMode() {
+            showStatus('scanning', '🎮', 'Demo Mode Active', 'Simulating router detection...');
+            demoModeBtn.disabled = true;
+            
+            // Update floating buttons for demo scanning
+            updateFloatingButtons('scanning');
+            
+            setTimeout(() => {
+                showStatus('success', '✅', 'Demo Router Detected!', 'Sample Verizon router loaded for demonstration');
+                setTimeout(() => {
+                    hideStatus();
+                    showArExperience();
+                    demoModeBtn.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
+        
+        function showArExperience() {
+            arExperience.classList.add('active');
+            arExperience.scrollIntoView({ behavior: 'smooth' });
+            
+            // Hide floating buttons when AR experience is shown
+            updateFloatingButtons('ar-active');
+            
+            // Add entrance animation
+            arExperience.style.opacity = '0';
+            arExperience.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                arExperience.style.transition = 'all 0.6s ease';
+                arExperience.style.opacity = '1';
+                arExperience.style.transform = 'translateY(0)';
+            }, 100);
+        }
+        
+        function showStatus(type, icon, message, detail) {
+            scannerStatus.style.display = 'block';
+            scannerStatus.className = `scanner-status ${type}`;
+            statusIcon.textContent = icon;
+            statusMessage.textContent = message;
+            statusDetail.textContent = detail;
+        }
+        
+        function hideStatus() {
+            scannerStatus.style.display = 'none';
+        }
+        
+        // Experience Functions
+        function openManagementExperience() {
+            openModal('account-modal');
+        }
+        
+        function openInstallationExperience() {
+            openModal('install-modal');
+        }
+        
+        function openUpgradeExperience() {
+            openModal('upgrade-modal');
+        }
+        
+        function openSupportExperience() {
+            openModal('support-modal');
+        }
+        
+        // Hotspot Modal Functions
+        function openAccountModal() {
+            openModal('account-modal');
+        }
+        
+        function openInstallModal() {
+            openModal('install-modal');
+        }
+        
+        function openUpgradeModal() {
+            openModal('upgrade-modal');
+        }
+        
+        function openSupportModal() {
+            openModal('support-modal');
+        }
+        
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+                // Add smooth entrance animation
+                const content = modal.querySelector('.modal-content');
+                content.style.transform = 'translate(-50%, -50%) scale(0.9)';
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    content.style.transition = 'all 0.3s ease';
+                    content.style.transform = 'translate(-50%, -50%) scale(1)';
+                    content.style.opacity = '1';
+                }, 10);
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                const content = modal.querySelector('.modal-content');
+                content.style.transform = 'translate(-50%, -50%) scale(0.9)';
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    content.style.transition = '';
+                }, 300);
+            }
+        }
+        
+        // Action Functions
+        function launchAccountDashboard() {
+            // Simulate launching account dashboard
+            alert('🚀 Launching Account Dashboard...\n\nThis would open your personalized account management interface with real-time data and controls.');
+            closeModal('account-modal');
+        }
+        
+        function launchInstallationGuide() {
+            // Simulate launching installation guide
+            alert('🔧 Starting AR Installation Guide...\n\nThis would launch an interactive AR guide to help you install and optimize your router setup.');
+            closeModal('install-modal');
+        }
+        
+        function launchUpgradeShop() {
+            // Could redirect to the cart.html page with upgrade options
+            window.location.href = 'cart.html?mode=upgrade';
+        }
+        
+        function launchSupport() {
+            // Simulate launching support
+            alert('🛠️ Connecting to Support...\n\nThis would connect you with live technical support or start automated diagnostics.');
+            closeModal('support-modal');
+        }
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                const modalId = event.target.id;
+                closeModal(modalId);
+            }
+        });
+        
+        // Floating button functions
+        function tryInRoom() {
+            // Redirect to main AR experience
+            window.location.href = 'index.html?ar=true';
+        }
+        
+        function quickScanRouter() {
+            // Auto-start camera scanning
+            if (!isScanning) {
+                startCameraScan();
+                // Scroll to camera section
+                document.querySelector('.camera-container').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }
+        
+        function updateFloatingButtons(state) {
+            const tryArBtn = document.getElementById('try-ar-btn');
+            const scanRouterBtn = document.getElementById('scan-router-btn');
+            
+            switch(state) {
+                case 'scanning':
+                    // Hide scan button during scanning, keep AR button
+                    scanRouterBtn.style.display = 'none';
+                    tryArBtn.style.display = 'flex';
+                    break;
+                case 'ar-active':
+                    // Hide both buttons when AR experience is active
+                    scanRouterBtn.style.display = 'none';
+                    tryArBtn.style.display = 'none';
+                    break;
+                case 'idle':
+                default:
+                    // Show both buttons in default state
+                    scanRouterBtn.style.display = 'flex';
+                    tryArBtn.style.display = 'flex';
+                    break;
+            }
+        }
+        
+        // Handle page unload - clean up camera
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+        
+        // Add visual feedback for successful scan
+        function addScanSuccessEffect() {
+            const scanFrame = document.querySelector('.scan-frame');
+            scanFrame.style.borderColor = '#CD040B';
+            scanFrame.style.boxShadow = '0 0 20px rgba(205, 4, 11, 0.6)';
+            scanFrame.style.animation = 'none';
+            
+            // Create success ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 0;
+                height: 0;
+                border: 2px solid #CD040B;
+                border-radius: 50%;
+                animation: ripple 1s ease-out;
+            `;
+            
+            document.querySelector('.camera-overlay').appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 1000);
+        }
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
