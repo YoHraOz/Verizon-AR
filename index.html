@@ -47,41 +47,6 @@
             color: var(--verizon-red);
         }
         
-        /* Side Menu Styles */
-        .side-menu {
-            position: fixed;
-            top: 60px;
-            left: -320px;
-            width: 320px;
-            height: calc(100vh - 60px);
-            background-color: #fff;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            transition: left 0.3s ease;
-            z-index: 999;
-            overflow-y: auto;
-        }
-        .side-menu.open {
-            left: 0;
-        }
-        
-        .menu-toggle {
-            position: fixed;
-            top: 70px;
-            left: 10px;
-            background-color: var(--verizon-red);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001;
-            font-size: 1.2em;
-        }
-        
-        .menu-content {
-            padding: 20px;
-        }
-        
         .main-container {
             flex: 1;
             display: flex;
@@ -173,156 +138,6 @@
             background-color: var(--verizon-dark-grey);
             color: white;
             border-color: var(--verizon-dark-grey);
-        }
-        
-        .product-info {
-            background-color: var(--verizon-light-grey);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .product-info h3 {
-            margin: 0 0 8px 0;
-            color: var(--verizon-dark-grey);
-            font-size: 1.3em;
-        }
-        .product-info p {
-            margin: 0 0 10px 0;
-            color: #666;
-            font-size: 1em;
-            line-height: 1.4;
-        }
-        .price {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--verizon-red);
-            margin-bottom: 15px;
-        }
-        
-        .accessories-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        .accessories-section h4 {
-            margin: 0 0 15px 0;
-            color: var(--verizon-dark-grey);
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        .accessories-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .accessory-item {
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            background-color: white;
-            transition: all 0.2s;
-        }
-        .accessory-item:hover {
-            border-color: var(--verizon-red);
-            box-shadow: 0 2px 8px rgba(205, 4, 11, 0.1);
-        }
-        .accessory-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .accessory-name {
-            font-size: 1em;
-            font-weight: 600;
-            color: var(--verizon-dark-grey);
-            flex: 1;
-        }
-        .accessory-price {
-            font-size: 1em;
-            font-weight: bold;
-            color: var(--verizon-red);
-        }
-        .accessory-description {
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .add-accessory-btn {
-            padding: 8px 16px;
-            font-size: 0.9em;
-            background-color: white;
-            border: 2px solid var(--verizon-red);
-            color: var(--verizon-red);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            align-self: flex-start;
-        }
-        .add-accessory-btn:hover {
-            background-color: var(--verizon-red);
-            color: white;
-        }
-        .add-accessory-btn.added {
-            background-color: #28a745;
-            border-color: #28a745;
-            color: white;
-        }
-        
-        .ar-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid var(--verizon-red);
-        }
-        
-        #ar-button {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            padding: 15px 20px;
-            font-size: 1.1em;
-            font-weight: bold;
-            background-color: var(--verizon-red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(205, 4, 11, 0.3);
-            transition: all 0.2s ease;
-        }
-        
-        #ar-button:hover {
-            background-color: var(--verizon-dark-red);
-            box-shadow: 0 6px 16px rgba(205, 4, 11, 0.4);
-            transform: translateY(-1px);
-        }
-        
-        .ar-features {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        .feature-btn {
-            padding: 10px 20px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.2s;
-        }
-        .feature-btn:hover {
-            background-color: var(--verizon-light-grey);
-        }
-        
-        .ar-features {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
         }
         
         /* Interactive Features Modals */
@@ -447,6 +262,350 @@
         .led-white { background-color: #ffffff; border-color: #333; }
         .led-unlit { background-color: #666; }
         
+        /* Plan Selection Modal Styles */
+        .plans-container {
+            position: relative;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        
+        .plan-selection {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 15px 10px 15px 10px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            scroll-snap-type: x mandatory;
+        }
+        
+        .plan-selection::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .plan-card {
+            flex: 0 0 300px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            scroll-snap-align: start;
+        }
+        
+        .plan-card:hover {
+            border-color: var(--verizon-red);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(205, 4, 11, 0.15);
+        }
+        
+        .plan-card.selected {
+            border-color: var(--verizon-red);
+            background: linear-gradient(145deg, #fff5f5, #ffffff);
+            box-shadow: 0 8px 25px rgba(205, 4, 11, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .plan-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .plan-info {
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .plan-name {
+            font-weight: 600;
+            color: var(--verizon-dark-grey);
+            margin: 0 0 6px 0;
+            font-size: 1em;
+        }
+        
+        .plan-description {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin: 0;
+        }
+        
+        .plans-scrollbar {
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        .plan-selection-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .plan-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+        }
+        
+        .plan-btn.primary {
+            background: var(--verizon-red);
+            color: white;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-btn.primary:hover {
+            background: var(--verizon-dark-red);
+        }
+        
+        .plan-btn.secondary {
+            background: #f8f9fa;
+            color: var(--verizon-dark-grey);
+            border: 1px solid #e9ecef;
+        }
+        
+        .plan-btn.secondary:hover {
+            background: #e9ecef;
+        }
+        
+        /* Perks Modal Styles */
+        .perks-modal-content {
+            max-width: 1000px;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .perks-container {
+            position: relative;
+            margin: 25px 0;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        
+        .perks-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 15px 10px 15px 10px;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            scroll-snap-type: x mandatory;
+        }
+        
+        .perks-gallery::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .perk-item {
+            flex: 0 0 240px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            scroll-snap-align: start;
+        }
+        
+        .perk-item:hover {
+            border-color: var(--verizon-red);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(205, 4, 11, 0.15);
+        }
+        
+        .perk-item.selected {
+            border-color: var(--verizon-red);
+            background: linear-gradient(145deg, #fff5f5, #ffffff);
+            box-shadow: 0 8px 25px rgba(205, 4, 11, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .perk-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .perks-scrollbar {
+            margin-top: 15px;
+            position: relative;
+        }
+        
+        .scrollbar-track {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            position: relative;
+            margin: 0 auto;
+            max-width: 80%;
+        }
+        
+        .scrollbar-thumb {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verizon-red), var(--verizon-dark-red));
+            border-radius: 4px;
+            position: absolute;
+            left: 0;
+            width: 25%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(205, 4, 11, 0.3);
+        }
+        
+        .perks-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .perk-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95em;
+        }
+        
+        .perk-btn.primary {
+            background: var(--verizon-red);
+            color: white;
+        }
+        
+        .perk-btn.primary:hover {
+            background: var(--verizon-dark-red);
+            transform: translateY(-2px);
+        }
+        
+        .perk-btn.secondary {
+            background: #f8f9fa;
+            color: var(--verizon-dark-grey);
+            border: 1px solid #e9ecef;
+        }
+        
+        .perk-btn.secondary:hover {
+            background: #e9ecef;
+        }
+        .wifi-modal-content {
+            max-width: 700px;
+            padding: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .wifi-modal-content .modal-header {
+            background: linear-gradient(135deg, var(--verizon-red), var(--verizon-dark-red));
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .wifi-modal-content .modal-header h2 {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .wifi-modal-content .close-btn {
+            color: white;
+            font-size: 1.5em;
+            opacity: 0.9;
+            transition: all 0.2s ease;
+            padding: 2px 5px;
+        }
+        
+        .wifi-modal-content .close-btn:hover {
+            color: white;
+            opacity: 1;
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .wifi-image-container {
+            padding: 15px;
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+        
+        .wifi-modal-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0;
+            transform: scale(0.95) translateY(15px);
+            animation: imageGracefulAppear 0.6s ease-out 0.15s forwards;
+            transition: transform 0.2s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .wifi-modal-image:hover {
+            transform: scale(1.01);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        @keyframes modalSlideIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -55%) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        @keyframes imageGracefulAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
         /* Enhanced Hotspot Styles */
         .hotspot {
             background: var(--verizon-red);
@@ -508,7 +667,67 @@
                 padding: 15px;
             }
             
+            .wifi-modal-content {
+                max-width: 90%;
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .wifi-modal-content .modal-header {
+                padding: 12px 15px;
+            }
+            
+            .wifi-modal-content .modal-header h2 {
+                font-size: 1.1em;
+            }
+            
+            .wifi-image-container {
+                padding: 10px;
+                min-height: 150px;
+            }
+            
+            .plan-selection {
+                gap: 15px;
+            }
+            
+            .plan-card {
+                flex: 0 0 280px;
+            }
+            
+            .plan-image {
+                height: 180px;
+            }
+            
+            .plan-selection-actions {
+                flex-direction: column;
+            }
+            
+            .plan-btn {
+                width: 100%;
+            }
+            
             .image-gallery img {
+                width: 100%;
+            }
+            
+            .perks-modal-content {
+                max-width: 95%;
+                padding: 15px;
+            }
+            
+            .perk-item {
+                flex: 0 0 220px;
+            }
+            
+            .perk-image {
+                height: 160px;
+            }
+            
+            .perks-actions {
+                flex-direction: column;
+            }
+            
+            .perk-btn {
                 width: 100%;
             }
         }
@@ -653,423 +872,8 @@
             background: #a8030a;
         }
         
-        /* AR Simulation Controls for Development */
-        #ar-simulator {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 2500;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid var(--verizon-red);
-            max-width: 300px;
-        }
-        
-        .ar-simulator-panel h4 {
-            margin: 0 0 10px 0;
-            color: var(--verizon-red);
-            font-size: 14px;
-        }
-        
-        .simulator-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .simulator-controls button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            background: var(--verizon-red);
-            color: white;
-            font-size: 12px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .simulator-controls button:hover {
-            background: #a8030a;
-        }
-        
-        .simulator-controls button:disabled {
-            background: #666;
-            cursor: not-allowed;
-        }
-        
-        .simulator-info {
-            font-size: 12px;
-            line-height: 1.4;
-        }
-        
-        .simulator-info p {
-            margin: 5px 0;
-        }
-        
-        .simulator-info span {
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        
-        .movement-instructions {
-            margin-top: 10px;
-            padding: 8px;
-            background: rgba(255, 165, 0, 0.2);
-            border-radius: 5px;
-            border: 1px solid orange;
-        }
-        
-        .movement-instructions small {
-            line-height: 1.3;
-        }
 
-        /* --- AR BUTTON FUNCTIONALITY ---
-        
-        // AR button event listener
-        function setupArButton() {
-            if (arButton) {
-                arButton.addEventListener('click', () => {
-                    if (modelViewer.canActivateAR) {
-                        console.log('🚀 Activating AR mode');
-                        modelViewer.activateAR();
-                    } else {
-                        console.log('❌ AR not supported on this device');
-                        alert('AR is not supported on this device. Please use an AR-capable mobile device with iOS Safari or Android Chrome.');
-                    }
-                });
-            }
-        }
 
-        // Initialize all functionality when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            setupHotspots();
-            setupMenu();
-            setupAccessories();
-            setupArButton(); // <-- Add this line to initialize AR button functionality
-            console.log('🚀 All interactive features initialized');
-        });
-        
-        /* --- BUYING EXPERIENCE STYLES --- */
-        
-        .buy-router-btn {
-            background: linear-gradient(135deg, var(--verizon-red), #e63946);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(205, 4, 11, 0.3);
-            margin: 20px 0;
-            width: 100%;
-        }
-        
-        .buy-router-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(205, 4, 11, 0.4);
-        }
-        
-        .buy-router-btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .view-cart-btn {
-            background: linear-gradient(135deg, #333, #555);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 12px 25px;
-            border-radius: 20px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 0;
-            width: 100%;
-        }
-        
-        .view-cart-btn:hover {
-            background: linear-gradient(135deg, #555, #777);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-        }
-        
-        #cart-count {
-            background: var(--verizon-red);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.9em;
-            min-width: 18px;
-            display: inline-block;
-            text-align: center;
-        }
-        
-        /* Plan Selection Modal */
-        .plan-selection-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            display: none;
-            overflow-y: auto;
-        }
-        
-        .plan-selection-content {
-            max-width: 1000px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-        }
-        
-        .plan-selection-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .plan-selection-header h2 {
-            color: var(--verizon-red);
-            font-size: 2em;
-            margin: 0;
-        }
-        
-        .plan-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .plan-card {
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            background: white;
-        }
-        
-        .plan-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border-color: var(--verizon-red);
-        }
-        
-        .plan-card.selected {
-            border-color: var(--verizon-red);
-            background: linear-gradient(135deg, #fff5f5, #fff);
-            box-shadow: 0 8px 20px rgba(205, 4, 11, 0.2);
-        }
-        
-        .plan-card.popular {
-            border-color: #ff6b35;
-            position: relative;
-        }
-        
-        .plan-card.popular::before {
-            content: "MOST POPULAR";
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff6b35;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-        
-        .plan-speed {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--verizon-red);
-            margin: 10px 0;
-        }
-        
-        .plan-price {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: var(--verizon-dark-grey);
-            margin: 15px 0;
-        }
-        
-        .plan-features {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-        
-        .plan-features li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* Accessory Selection */
-        .accessory-selection {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f0f0;
-        }
-        
-        .accessory-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .accessory-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-        }
-        
-        .accessory-card:hover {
-            border-color: var(--verizon-red);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .accessory-card.selected {
-            border-color: var(--verizon-red);
-            background: #fff5f5;
-        }
-        
-        .accessory-card h4 {
-            margin: 0 0 10px 0;
-            color: var(--verizon-dark-grey);
-        }
-        
-        .accessory-card .price {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: var(--verizon-red);
-            margin: 10px 0;
-        }
-        
-        /* Purchase Summary */
-        .purchase-summary {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        
-        .summary-total {
-            border-top: 2px solid var(--verizon-red);
-            padding-top: 15px;
-            margin-top: 15px;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        
-        .complete-purchase-btn {
-            background: var(--verizon-red);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .complete-purchase-btn:hover {
-            background: #a8030a;
-            transform: translateY(-2px);
-        }
-        
-        /* Post-Purchase Interactive Hotspots */
-        .post-purchase-hotspot {
-            background: #28a745;
-            border: 3px solid white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulse-green 2s infinite;
-            position: relative;
-            pointer-events: auto !important;
-            z-index: 100;
-        }
-        
-        .post-purchase-hotspot:hover {
-            transform: scale(1.3);
-            background: #1e7e34;
-        }
-        
-        @keyframes pulse-green {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-            50% { box-shadow: 0 0 0 15px rgba(40, 167, 69, 0); }
-        }
-        
-        /* Purchase Success */
-        .purchase-success {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .success-icon {
-            font-size: 4em;
-            color: #28a745;
-            margin-bottom: 20px;
-        }
-        
-        .purchase-success h3 {
-            color: #28a745;
-            margin-bottom: 15px;
-        }
-        
-        @media (max-width: 768px) {
-            .modal-content {
-                max-width: 95%;
-                padding: 15px;
-            }
-            
-            .image-gallery img {
-                width: 100%;
-            }
-            
-            .plan-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .plan-selection-content {
-                margin: 10px;
-                padding: 20px;
-            }
-        }
-        
         /* Floating Action Buttons */
         .floating-buttons {
             position: fixed;
@@ -1159,79 +963,8 @@
         Verizon <span>AR</span> Experience - FiOS Router
     </div>
 
-    <!-- Menu Toggle Button -->
-    <button class="menu-toggle" id="menu-toggle">☰</button>
-
-    <!-- Side Menu -->
-    <div class="side-menu" id="side-menu">
-        <div class="menu-content">
-            <!-- Product Information Panel -->
-            <div class="product-info" id="product-info">
-                <h3 id="product-name">Verizon FiOS Router</h3>
-                <p id="product-description">Ultra-fast FiOS home internet router with Wi-Fi 6E technology</p>
-                <div class="price" id="product-price">$399.99</div>
-                
-                <!-- Compatible Accessories -->
-                <div class="accessories-section" id="accessories-section">
-                    <h4>Compatible Accessories</h4>
-                    <div class="accessories-list" id="accessories-list">
-                        <div class="accessory-item">
-                            <div class="accessory-header">
-                                <span class="accessory-name">Wall Mounting Bracket</span>
-                                <span class="accessory-price">$24.99</span>
-                            </div>
-                            <div class="accessory-description">Secure wall mount for optimal router placement and better signal coverage</div>
-                            <button class="add-accessory-btn" data-accessory="Wall Mounting Bracket">Add to Cart</button>
-                        </div>
-                        <div class="accessory-item">
-                            <div class="accessory-header">
-                                <span class="accessory-name">Ethernet Cable (25ft)</span>
-                                <span class="accessory-price">$19.99</span>
-                            </div>
-                            <div class="accessory-description">High-speed Cat6 ethernet cable for direct wired connections</div>
-                            <button class="add-accessory-btn" data-accessory="Ethernet Cable">Add to Cart</button>
-                        </div>
-                        <div class="accessory-item">
-                            <div class="accessory-header">
-                                <span class="accessory-name">Range Extender</span>
-                                <span class="accessory-price">$89.99</span>
-                            </div>
-                            <div class="accessory-description">Extend Wi-Fi coverage to eliminate dead zones in your home</div>
-                            <button class="add-accessory-btn" data-accessory="Range Extender">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Buy Router Section -->
-                <div class="buy-section" id="buy-section">
-                    <button class="buy-router-btn" id="buy-router-btn">
-                        🛒 Buy Router + Choose Plan
-                    </button>
-                    <button class="view-cart-btn" id="view-cart-btn" onclick="openCartPage()">
-                        🛍️ View Cart (<span id="cart-count">0</span>)
-                    </button>
-                    <p style="font-size: 0.9em; color: #666; text-align: center; margin-top: 10px;">
-                        Bundle with internet plan for best pricing
-                    </p>
-                </div>
-            </div>
-            
-            <!-- AR Section -->
-            <div class="ar-section">
-                <!-- AR Features -->
-                <div class="ar-features">
-                    <button class="feature-btn" id="info-btn">ℹ️ Info</button>
-                    <button class="feature-btn" id="camera-scanner-btn" onclick="openCameraScanner()">📱 Scan Your Router</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Fixed AR Button in right corner -->
-        <button id="ar-button">🏠 Try in Your Room</button>
-        
         <!-- This container holds the 3D model viewer -->
         <div id="viewer-container">
         <model-viewer
@@ -1257,20 +990,20 @@
             touch-action="pan-y">
             
             <!-- Hotspots for interactive features -->
-            <button class="hotspot" slot="hotspot-1" data-position="1 1 1" data-normal="0 1 0" id="wifi-hotspot">
-                <div class="annotation">Wi-Fi 6E</div>
+            <button class="hotspot" slot="hotspot-1" data-position="1 0.4 1" data-normal="1 0 0" id="wifi-hotspot">
+                <div class="annotation">Technical Specifications</div>
             </button>
             
-            <button class="hotspot" slot="hotspot-2" data-position="-1 0.5 -1" data-normal="0 0 -1" id="rear-hotspot">
-                <div class="annotation">Rear Panel</div>
+            <button class="hotspot" slot="hotspot-2" data-position="1 0.3 1" data-normal="1 0 0" id="rear-hotspot">
+                <div class="annotation">Choose Plan</div>
             </button>
             
-            <button class="hotspot" slot="hotspot-3" data-position="0.5 0.2 1" data-normal="0 0 1" id="led-hotspot">
-                <div class="annotation">LED Status</div>
+            <button class="hotspot" slot="hotspot-3" data-position="1 0.2 1" data-normal="1 0 0" id="led-hotspot">
+                <div class="annotation">Choose Perks</div>
             </button>
             
-            <button class="hotspot" slot="hotspot-4" data-position="0 -0.8 0" data-normal="0 -1 0" id="mount-hotspot">
-                <div class="annotation">Mounting</div>
+            <button class="hotspot" slot="hotspot-4" data-position="1 0.1 1" data-normal="1 0 0" id="mount-hotspot">
+                <div class="annotation">Accessories</div>
             </button>
         </model-viewer>
         </div>
@@ -1305,87 +1038,110 @@
             </div>
         </div>
         
-        <!-- AR Simulator Controls for Development -->
-        <!--<div id="ar-simulator" style="display: none;">
-            <div class="ar-simulator-panel">
-                <h4>🧪 AR Simulator (Development Mode)</h4>
-                <div class="simulator-controls">
-                    <button id="simulate-ar-btn">Simulate AR Session</button>
-                    <button id="simulate-placement-btn">Simulate Placement</button>
-                    <button id="stop-simulation-btn">Stop Simulation</button>
-                    <button id="enable-movement-btn" style="display:none;">Enable Movement Mode</button>
-                    <button id="reset-position-btn" style="display:none;">Reset Position</button>
-                </div>
-                <div class="simulator-info">
-                    <p>Status: <span id="sim-status">Ready</span></p>
-                    <p>Scale: <span id="sim-scale">1.0x</span></p>
-                    <p>Mode: <span id="sim-mode">Rotation</span></p>
-                </div>
-                <div class="movement-instructions" id="movement-instructions" style="display:none;">
-                    <small>
-                        <strong>Movement Mode Active:</strong><br>
-                        • Drag mouse = Move router position<br>
-                        • Mouse wheel = Scale router size<br>
-                        • Right click = Exit movement mode<br>
-                        • Reset button = Return to center
-                    </small>
-                </div>
-            </div>
-        </div>-->
+
         
         <!-- Interactive Feature Modals -->
+        
+        <!-- Wi-Fi 6E Modal -->
+        <div id="wifi-modal" class="modal">
+            <div class="modal-content wifi-modal-content">
+                <div class="modal-header">
+                    <h2>📋 Technical Specification</h2>
+                    <button class="close-btn" onclick="closeModal('wifi-modal')">&times;</button>
+                </div>
+                <div class="wifi-image-container">
+                    <img src="./image.png" alt="Wi-Fi 6E Technology Information" class="wifi-modal-image">
+                </div>
+            </div>
+        </div>
         
         <!-- Rear Panel Modal -->
         <div id="rear-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>🔌 Rear Panel Information</h2>
+                    <h2>� Choose Your Plan</h2>
                     <button class="close-btn" onclick="closeModal('rear-modal')">&times;</button>
                 </div>
-                <img src="./back router info.png" alt="Router Rear Panel Information" class="modal-image">
-                <p>Complete overview of all rear panel ports and connections for your Verizon FiOS Router.</p>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">Select the perfect Verizon plan for your needs</p>
+                <div class="plans-container">
+                    <div class="plan-selection">
+                        <div class="plan-card" data-plan="plan1" onclick="selectPlan('plan1')">
+                            <img src="./plans/plan1.png" alt="Plan 1" class="plan-image">
+                            <div class="plan-info">
+                                <h3 class="plan-name">Starter Plan</h3>
+                                <p class="plan-description">Perfect for basic internet needs with reliable connectivity</p>
+                            </div>
+                        </div>
+                        <div class="plan-card" data-plan="plan2" onclick="selectPlan('plan2')">
+                            <img src="./plans/plan2.png" alt="Plan 2" class="plan-image">
+                            <div class="plan-info">
+                                <h3 class="plan-name">Essential Plan</h3>
+                                <p class="plan-description">Great for small families and light streaming</p>
+                            </div>
+                        </div>
+                        <div class="plan-card" data-plan="plan3" onclick="selectPlan('plan3')">
+                            <img src="./plans/plan3.png" alt="Plan 3" class="plan-image">
+                            <div class="plan-info">
+                                <h3 class="plan-name">Premium Plan</h3>
+                                <p class="plan-description">Enhanced features for streaming and smart home devices</p>
+                            </div>
+                        </div>
+                        <div class="plan-card" data-plan="plan4" onclick="selectPlan('plan4')">
+                            <img src="./plans/plan4.png" alt="Plan 4" class="plan-image">
+                            <div class="plan-info">
+                                <h3 class="plan-name">Ultimate Plan</h3>
+                                <p class="plan-description">Maximum speed and features for power users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plans-scrollbar">
+                        <div class="scrollbar-track">
+                            <div class="scrollbar-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan-selection-actions">
+                    <button class="plan-btn primary" id="choose-plan-btn" onclick="choosePlan()">Choose Selected Plan</button>
+                    <button class="plan-btn secondary" onclick="closeModal('rear-modal')">Cancel</button>
+                </div>
             </div>
         </div>
         
-        <!-- LED Status Modal -->
+        <!-- Perks Modal -->
         <div id="led-modal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content perks-modal-content">
                 <div class="modal-header">
-                    <h2>💡 LED Status Indicators</h2>
+                    <h2>🎁 Choose Your Perks</h2>
                     <button class="close-btn" onclick="closeModal('led-modal')">&times;</button>
                 </div>
-                <div class="led-info">
-                    <div class="led-section">
-                        <h4>LAN/WAN Ethernet Port</h4>
-                        <div class="led-status">
-                            <div class="led-indicator led-unlit"></div>
-                            <span><strong>Unlit</strong> – Indicates no Ethernet link or dims after 5 minutes idle</span>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">Discover exclusive perks and benefits available with your plan</p>
+                <div class="perks-container">
+                    <div class="perks-gallery">
+                        <div class="perk-item" data-perk="perk1">
+                            <img src="./perks/perk1.png" alt="Perk 1" class="perk-image">
+                        </div>
+                        <div class="perk-item" data-perk="perk2">
+                            <img src="./perks/perk2.png" alt="Perk 2" class="perk-image">
+                        </div>
+                        <div class="perk-item" data-perk="perk3">
+                            <img src="./perks/perk3.png" alt="Perk 3" class="perk-image">
+                        </div>
+                        <div class="perk-item" data-perk="perk4">
+                            <img src="./perks/perk4.png" alt="Perk 4" class="perk-image">
+                        </div>
+                        <div class="perk-item" data-perk="perk5">
+                            <img src="./perks/perk5.png" alt="Perk 5" class="perk-image">
                         </div>
                     </div>
-                    
-                    <div class="led-section">
-                        <h4>Left LED</h4>
-                        <div class="led-status">
-                            <div class="led-indicator led-yellow"></div>
-                            <span><strong>Solid yellow</strong> – Indicates less than 1 Gbps link</span>
-                        </div>
-                        <div class="led-status">
-                            <div class="led-indicator led-yellow" style="animation: blink 1s infinite;"></div>
-                            <span><strong>Flash yellow</strong> – Indicates LAN/WAN activity. The traffic can be in either direction.</span>
+                    <div class="perks-scrollbar">
+                        <div class="scrollbar-track">
+                            <div class="scrollbar-thumb"></div>
                         </div>
                     </div>
-                    
-                    <div class="led-section">
-                        <h4>Right LED</h4>
-                        <div class="led-status">
-                            <div class="led-indicator led-white"></div>
-                            <span><strong>Solid white</strong> – Indicates 1/2.5/5/10 Gbps link</span>
-                        </div>
-                        <div class="led-status">
-                            <div class="led-indicator led-white" style="animation: blink 1s infinite;"></div>
-                            <span><strong>Flash white</strong> – Indicates LAN/WAN activity. The traffic can be in either direction.</span>
-                        </div>
-                    </div>
+                </div>
+                <div class="perks-actions">
+                    <button class="perk-btn primary" onclick="selectAllPerks()">Select All Perks</button>
+                    <button class="perk-btn secondary" onclick="closeModal('led-modal')">Maybe Later</button>
                 </div>
             </div>
         </div>
@@ -1394,141 +1150,14 @@
         <div id="mount-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>🔧 Mounting Options</h2>
+                    <h2>🔧 Accessories available</h2>
                     <button class="close-btn" onclick="closeModal('mount-modal')">&times;</button>
                 </div>
                 <div class="image-gallery">
                     <img src="./mount1.png" alt="Mounting Option 1" class="modal-image">
                     <img src="./mount2.png" alt="Mounting Option 2" class="modal-image">
                 </div>
-                <p>Choose from multiple mounting configurations to best suit your installation needs.</p>
-            </div>
-        </div>
-        
-        <!-- Plan Selection Modal -->
-        <div id="plan-selection-modal" class="plan-selection-modal">
-            <div class="plan-selection-content">
-                <div class="plan-selection-header">
-                    <h2>🚀 Choose Your Verizon FiOS Plan</h2>
-                    <button class="close-btn" onclick="closePlanModal()">&times;</button>
-                    <p>Select the perfect internet plan to go with your new router</p>
-                </div>
-                
-                <!-- Plan Cards -->
-                <div class="plan-cards">
-                    <div class="plan-card" data-plan="basic" data-price="39.99">
-                        <h3>Basic FiOS</h3>
-                        <div class="plan-speed">200 Mbps</div>
-                        <div class="plan-price">$39.99/mo</div>
-                        <ul class="plan-features">
-                            <li>✓ Perfect for 1-2 devices</li>
-                            <li>✓ Stream HD video</li>
-                            <li>✓ Basic web browsing</li>
-                            <li>✓ Email and social media</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="plan-card popular" data-plan="gigabit" data-price="64.99">
-                        <h3>Gigabit FiOS</h3>
-                        <div class="plan-speed">1000 Mbps</div>
-                        <div class="plan-price">$64.99/mo</div>
-                        <ul class="plan-features">
-                            <li>✓ Perfect for 4-6 devices</li>
-                            <li>✓ Stream 4K ultra HD</li>
-                            <li>✓ Gaming and video calls</li>
-                            <li>✓ Smart home devices</li>
-                            <li>✓ Work from home</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="plan-card" data-plan="ultra" data-price="89.99">
-                        <h3>Ultra FiOS</h3>
-                        <div class="plan-speed">2000 Mbps</div>
-                        <div class="plan-price">$89.99/mo</div>
-                        <ul class="plan-features">
-                            <li>✓ Perfect for 8+ devices</li>
-                            <li>✓ Multiple 4K streams</li>
-                            <li>✓ Professional gaming</li>
-                            <li>✓ Large file uploads</li>
-                            <li>✓ Future-proof speed</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Accessory Selection -->
-                <div class="accessory-selection">
-                    <h3>📦 Add Premium Accessories</h3>
-                    <div class="accessory-cards">
-                        <div class="accessory-card" data-accessory="mesh" data-price="149.99">
-                            <h4>🌐 Mesh Network Extender</h4>
-                            <p>Eliminate dead zones with Wi-Fi 6E mesh technology</p>
-                            <div class="price">$149.99</div>
-                        </div>
-                        
-                        <div class="accessory-card" data-accessory="security" data-price="9.99">
-                            <h4>🔒 Advanced Security Package</h4>
-                            <p>24/7 network protection and parental controls</p>
-                            <div class="price">$9.99/mo</div>
-                        </div>
-                        
-                        <div class="accessory-card" data-accessory="support" data-price="14.99">
-                            <h4>🛠️ Premium Tech Support</h4>
-                            <p>Priority support and installation assistance</p>
-                            <div class="price">$14.99/mo</div>
-                        </div>
-                        
-                        <div class="accessory-card" data-accessory="cloud" data-price="12.99">
-                            <h4>☁️ Cloud Storage Plus</h4>
-                            <p>1TB secure cloud backup for all your devices</p>
-                            <div class="price">$12.99/mo</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Purchase Summary -->
-                <div class="purchase-summary">
-                    <h3>📋 Order Summary</h3>
-                    <div class="summary-item">
-                        <span>Verizon FiOS Router:</span>
-                        <span>$399.99</span>
-                    </div>
-                    <div class="summary-item" id="selected-plan">
-                        <span>Internet Plan:</span>
-                        <span>Select a plan</span>
-                    </div>
-                    <div id="selected-accessories"></div>
-                    <div class="summary-total">
-                        <div class="summary-item">
-                            <span>Total Monthly:</span>
-                            <span id="monthly-total">$0.00/mo</span>
-                        </div>
-                        <div class="summary-item">
-                            <span>Total Today:</span>
-                            <span id="today-total">$399.99</span>
-                        </div>
-                    </div>
-                    
-                    <button class="complete-purchase-btn" id="complete-purchase-btn" disabled>
-                        Complete Purchase
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Purchase Success Modal -->
-        <div id="purchase-success-modal" class="plan-selection-modal">
-            <div class="plan-selection-content">
-                <div class="purchase-success">
-                    <div class="success-icon">🎉</div>
-                    <h3>Purchase Successful!</h3>
-                    <p>Your Verizon FiOS Router and plan have been ordered.</p>
-                    <p><strong>Installation scheduled:</strong> Within 3-5 business days</p>
-                    <p>You'll receive a confirmation email shortly.</p>
-                    <p><em>Notice: New interactive features are now available on your 3D model!</em></p>
-                    <button class="complete-purchase-btn" onclick="completePurchaseFlow()">
-                        Explore Your New Router
-                    </button>
-                </div>
+                <p>Choose from multiple available Accessories.</p>
             </div>
         </div>
     </div>
@@ -1569,13 +1198,6 @@
 
         // --- DOM ELEMENT REFERENCES ---
         const modelViewer = document.querySelector('#product-viewer');
-        const arButton = document.querySelector('#ar-button');
-        const infoBtn = document.querySelector('#info-btn');
-        const menuToggle = document.querySelector('#menu-toggle');
-        const sideMenu = document.querySelector('#side-menu');
-        const productName = document.querySelector('#product-name');
-        const productDescription = document.querySelector('#product-description');
-        const productPrice = document.querySelector('#product-price');
 
         // AR Controls DOM references
         const arControls = document.querySelector('#ar-controls');
@@ -1585,28 +1207,12 @@
         const arResetBtn = document.querySelector('#ar-reset-btn');
         const arDoneBtn = document.querySelector('#ar-done-btn');
 
-        // AR Simulator DOM references  
-        const arSimulator = document.querySelector('#ar-simulator');
-        const simulateArBtn = document.querySelector('#simulate-ar-btn');
-        const simulatePlacementBtn = document.querySelector('#simulate-placement-btn');
-        const stopSimulationBtn = document.querySelector('#stop-simulation-btn');
-        const enableMovementBtn = document.querySelector('#enable-movement-btn');
-        const resetPositionBtn = document.querySelector('#reset-position-btn');
-        const simStatus = document.querySelector('#sim-status');
-        const simScale = document.querySelector('#sim-scale');
-        const simMode = document.querySelector('#sim-mode');
-        const movementInstructions = document.querySelector('#movement-instructions');
+
 
         // AR state variables
         let isInAR = false;
         let realWorldScale = 1.0;
         let viewerScale = 1.0;
-        let isSimulating = false;
-        let movementMode = false;
-        let isDragging = false;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
-        let routerPosition = { x: 0, y: 0, z: 0 };
 
         // --- AR FUNCTIONALITY ---
         
@@ -1654,30 +1260,7 @@
             }
         }
 
-        // Reset router position
-        function resetRouterPosition() {
-            routerPosition = { x: 0, y: 0, z: 0 };
-            
-            // Reset model position
-            try {
-                modelViewer.cameraTarget = '0m 0m 0m';
-                // Also clear any CSS transforms
-                modelViewer.style.transform = '';
-            } catch (e) {
-                // Fallback: clear CSS transform
-                modelViewer.style.transform = '';
-            }
-            
-            // Reset all hotspots to their original positions
-            const hotspots = modelViewer.querySelectorAll('.hotspot');
-            hotspots.forEach(hotspot => {
-                if (hotspot.dataset.originalPosition) {
-                    hotspot.setAttribute('data-position', hotspot.dataset.originalPosition);
-                }
-            });
-            
-            console.log('📍 Router position reset to origin');
-        }
+
 
         // AR session event listeners
         modelViewer.addEventListener('ar-status', (event) => {
@@ -1729,347 +1312,212 @@
         // Make hideArHint globally accessible
         window.hideArHint = hideArHint;
 
-        // --- AR SIMULATOR FOR DEVELOPMENT ---
+        // --- PLAN SELECTION FUNCTIONALITY ---
+        let selectedPlan = null;
         
-        // Show AR simulator in development (localhost)
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            if (arSimulator) {
-                arSimulator.style.display = 'block';
-                console.log('🧪 AR Simulator enabled for local development');
-            }
-        }
-        
-        // Simulate AR session start
-        function simulateArSession() {
-            if (isSimulating) return;
+        function selectPlan(planId) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.classList.remove('selected');
+            });
             
-            // Reset any previous movement mode state
-            if (movementMode) {
-                disableMovementMode();
-            }
-            
-            isSimulating = true;
-            isInAR = true;
-            
-            // Update UI
-            if (simStatus) simStatus.textContent = 'AR Session Active';
-            if (simulateArBtn) simulateArBtn.disabled = true;
-            if (stopSimulationBtn) stopSimulationBtn.disabled = false;
-            if (enableMovementBtn) {
-                enableMovementBtn.style.display = 'block';
-                // Ensure proper event listener setup
-                enableMovementBtn.removeEventListener('click', enableMovementMode);
-                enableMovementBtn.removeEventListener('click', disableMovementMode);
-                enableMovementBtn.addEventListener('click', enableMovementMode);
-                enableMovementBtn.textContent = 'Enable Movement Mode';
-            }
-            if (resetPositionBtn) resetPositionBtn.style.display = 'block';
-            
-            // Show AR controls and hint (like real AR)
-            if (arControls) arControls.style.display = 'block';
-            showArHint();
-            
-            // Switch to real-world scale
-            updateModelScale(realWorldScale, true);
-            updateScaleDisplay(realWorldScale);
-            
-            // Add visual indicator that we're in simulation mode
-            document.body.style.border = '4px solid orange';
-            document.body.style.boxSizing = 'border-box';
-            
-            console.log('🧪 Simulating AR session started');
-        }
-        
-        // Enable movement mode
-        function enableMovementMode() {
-            if (movementMode) return; // Already in movement mode
-            
-            movementMode = true;
-            if (simMode) simMode.textContent = 'Movement';
-            if (movementInstructions) movementInstructions.style.display = 'block';
-            if (enableMovementBtn) {
-                enableMovementBtn.textContent = 'Disable Movement Mode';
-                enableMovementBtn.style.display = 'block';
-                // Remove existing event listener to avoid duplicates
-                enableMovementBtn.removeEventListener('click', enableMovementMode);
-                enableMovementBtn.removeEventListener('click', disableMovementMode);
-                enableMovementBtn.addEventListener('click', disableMovementMode);
-            }
-            
-            // Disable camera controls in model-viewer
-            modelViewer.cameraControls = false;
-            
-            // Remove any existing event listeners first to prevent duplicates
-            cleanupMovementListeners();
-            
-            // Add movement event listeners
-            modelViewer.addEventListener('mousedown', startDrag);
-            modelViewer.addEventListener('mousemove', drag);
-            modelViewer.addEventListener('mouseup', stopDrag);
-            modelViewer.addEventListener('wheel', handleWheel);
-            modelViewer.addEventListener('contextmenu', toggleRotation);
-            
-            console.log('🖱️ Movement mode enabled');
-        }
-        
-        // Disable movement mode
-        function disableMovementMode() {
-            if (!movementMode) return; // Already disabled
-            
-            movementMode = false;
-            isDragging = false; // Reset dragging state
-            
-            if (simMode) simMode.textContent = 'Rotation';
-            if (movementInstructions) movementInstructions.style.display = 'none';
-            if (enableMovementBtn) {
-                enableMovementBtn.textContent = 'Enable Movement Mode';
-                enableMovementBtn.style.display = 'block';
-                // Remove existing event listener to avoid duplicates
-                enableMovementBtn.removeEventListener('click', enableMovementMode);
-                enableMovementBtn.removeEventListener('click', disableMovementMode);
-                enableMovementBtn.addEventListener('click', enableMovementMode);
-            }
-            
-            // Re-enable camera controls
-            modelViewer.cameraControls = true;
-            
-            // Remove movement event listeners
-            cleanupMovementListeners();
-            
-            console.log('🔄 Rotation mode enabled');
-        }
-        
-        // Clean up movement event listeners
-        function cleanupMovementListeners() {
-            modelViewer.removeEventListener('mousedown', startDrag);
-            modelViewer.removeEventListener('mousemove', drag);
-            modelViewer.removeEventListener('mouseup', stopDrag);
-            modelViewer.removeEventListener('wheel', handleWheel);
-            modelViewer.removeEventListener('contextmenu', toggleRotation);
-        }
-        
-        // Mouse drag functions for movement
-        function startDrag(event) {
-            if (!movementMode) return;
-            isDragging = true;
-            lastMouseX = event.clientX;
-            lastMouseY = event.clientY;
-            event.preventDefault();
-        }
-        
-        function drag(event) {
-            if (!movementMode || !isDragging) return;
-            
-            const deltaX = (event.clientX - lastMouseX) * 0.01;
-            const deltaY = (event.clientY - lastMouseY) * 0.01;
-            
-            routerPosition.x += deltaX;
-            routerPosition.y -= deltaY; // Invert Y for natural movement
-            
-            // Update model position
-            updateModelPosition();
-            
-            lastMouseX = event.clientX;
-            lastMouseY = event.clientY;
-            event.preventDefault();
-        }
-        
-        function stopDrag(event) {
-            if (!movementMode) return;
-            isDragging = false;
-            event.preventDefault();
-        }
-        
-        // Handle mouse wheel for scaling
-        function handleWheel(event) {
-            if (!movementMode || !isSimulating) return;
-            
-            const delta = event.deltaY > 0 ? -0.1 : 0.1;
-            const newScale = Math.max(0.5, Math.min(2, realWorldScale + delta));
-            
-            updateModelScale(newScale, true);
-            updateScaleDisplay(newScale);
-            
-            if (arScaleSlider) arScaleSlider.value = newScale;
-            if (simScale) simScale.textContent = `${newScale.toFixed(1)}x`;
-            
-            event.preventDefault();
-            event.stopPropagation();
-            
-            console.log(`🔄 Wheel scaling: ${newScale.toFixed(1)}x`);
-        }
-        
-        // Toggle rotation mode
-        function toggleRotation(event) {
-            if (!movementMode) return;
-            event.preventDefault();
-            disableMovementMode();
-        }
-        
-        // Update model position
-        function updateModelPosition() {
-            const position = `${routerPosition.x} ${routerPosition.y} ${routerPosition.z}`;
-            
-            // Instead of moving the camera target (which changes view), 
-            // we'll adjust the camera orbit to simulate model movement
-            const currentOrbit = modelViewer.getCameraOrbit();
-            modelViewer.cameraOrbit = `${currentOrbit.theta}rad ${currentOrbit.phi}rad ${currentOrbit.radius}m`;
-            
-            // For AR simulation, we can use a transform on a wrapper div if needed
-            // But for now, let's update the camera target properly
-            try {
-                // Set camera target with proper units
-                modelViewer.cameraTarget = `${routerPosition.x}m ${routerPosition.y}m ${routerPosition.z}m`;
-            } catch (e) {
-                console.log('Camera target update failed, using alternative method');
-                // Fallback: use CSS transform on the model viewer itself (less ideal but functional)
-                const transform = `translate3d(${routerPosition.x * 50}px, ${-routerPosition.y * 50}px, 0px)`;
-                modelViewer.style.transform = transform;
-            }
-            
-            // Update all hotspots to move with the model
-            const hotspots = modelViewer.querySelectorAll('.hotspot');
-            hotspots.forEach((hotspot) => {
-                // Get original position from a data attribute or use default positions
-                let originalPos;
-                if (!hotspot.dataset.originalPosition) {
-                    // Store original position on first move
-                    const currentPosStr = hotspot.getAttribute('data-position');
-                    if (currentPosStr) {
-                        originalPos = currentPosStr.split(' ').map(Number);
-                        hotspot.dataset.originalPosition = originalPos.join(' ');
-                    } else {
-                        // Default hotspot positions if none set
-                        originalPos = [0, 0, 0];
-                        hotspot.dataset.originalPosition = originalPos.join(' ');
-                    }
-                } else {
-                    originalPos = hotspot.dataset.originalPosition.split(' ').map(Number);
+            // Add selected class to clicked card
+            const selectedCard = document.querySelector(`[data-plan="${planId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+                selectedPlan = planId;
+                
+                // Enable the choose plan button
+                const chooseBtn = document.getElementById('choose-plan-btn');
+                if (chooseBtn) {
+                    chooseBtn.style.opacity = '1';
+                    chooseBtn.style.pointerEvents = 'auto';
                 }
                 
-                // Apply router position offset to original hotspot position
-                const newPos = [
-                    originalPos[0] + routerPosition.x,
-                    originalPos[1] + routerPosition.y,
-                    originalPos[2] + routerPosition.z
-                ];
-                hotspot.setAttribute('data-position', newPos.join(' '));
-            });
-            
-            console.log(`📍 Router moved to: ${position}`);
-        }
-        
-        // Simulate object placement
-        function simulatePlacement() {
-            if (!isSimulating) {
-                alert('Start AR simulation first!');
-                return;
+                console.log(`📋 Selected plan: ${planId}`);
             }
-            
-            // Hide the hint as if user placed the object
-            hideArHint();
-            
-            // Add placement animation effect
-            modelViewer.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                modelViewer.style.transform = 'scale(1.0)';
-            }, 200);
-            
-            if (simStatus) simStatus.textContent = 'Object Placed';
-            console.log('🧪 Simulating object placement');
         }
         
-        // Stop AR simulation
-        function stopArSimulation() {
-            if (!isSimulating) return;
-            
-            isSimulating = false;
-            isInAR = false;
-            movementMode = false;
-            isDragging = false;
-            
-            // Reset router position
-            routerPosition = { x: 0, y: 0, z: 0 };
-            
-            // Update UI
-            if (simStatus) simStatus.textContent = 'Ready';
-            if (simMode) simMode.textContent = 'Rotation';
-            if (simulateArBtn) simulateArBtn.disabled = false;
-            if (stopSimulationBtn) stopSimulationBtn.disabled = true;
-            
-            // Properly reset movement mode
-            if (movementMode) {
-                disableMovementMode(); // This will clean up listeners and reset state
-            }
-            
-            if (enableMovementBtn) {
-                enableMovementBtn.style.display = 'none';
-                enableMovementBtn.textContent = 'Enable Movement Mode';
-                // Clean up any existing event listeners
-                enableMovementBtn.removeEventListener('click', enableMovementMode);
-                enableMovementBtn.removeEventListener('click', disableMovementMode);
-                enableMovementBtn.addEventListener('click', enableMovementMode);
-            }
-            if (resetPositionBtn) resetPositionBtn.style.display = 'none';
-            if (movementInstructions) movementInstructions.style.display = 'none';
-            
-            // Hide AR controls and hint
-            if (arControls) arControls.style.display = 'none';
-            hideArHint();
-            
-            // Switch back to viewer scale
-            updateModelScale(viewerScale, false);
-            
-            // Remove visual indicator
-            document.body.style.border = '';
-            document.body.style.boxSizing = '';
-            
-            // Reset model viewer
-            modelViewer.style.transform = '';
-            modelViewer.cameraControls = true;
-            
-            // Remove any movement event listeners
-            modelViewer.removeEventListener('mousedown', startDrag);
-            modelViewer.removeEventListener('mousemove', drag);
-            modelViewer.removeEventListener('mouseup', stopDrag);
-            modelViewer.removeEventListener('wheel', handleWheel);
-            modelViewer.removeEventListener('contextmenu', toggleRotation);
-            
-            console.log('🧪 AR simulation stopped');
-        }
-        
-        // Simulator event listeners
-        if (simulateArBtn) {
-            simulateArBtn.addEventListener('click', simulateArSession);
-        }
-        
-        if (simulatePlacementBtn) {
-            simulatePlacementBtn.addEventListener('click', simulatePlacement);
-        }
-        
-        if (stopSimulationBtn) {
-            stopSimulationBtn.addEventListener('click', stopArSimulation);
-        }
-        
-        if (enableMovementBtn) {
-            enableMovementBtn.addEventListener('click', enableMovementMode);
-        }
-        
-        if (resetPositionBtn) {
-            resetPositionBtn.addEventListener('click', resetRouterPosition);
-        }
-        
-        // Update simulator scale display when scale changes
-        if (arScaleSlider) {
-            arScaleSlider.addEventListener('input', (e) => {
-                const scale = parseFloat(e.target.value);
-                updateModelScale(scale, isInAR);
-                updateScaleDisplay(scale);
+        function choosePlan() {
+            if (selectedPlan) {
+                // Here you can add logic to handle the selected plan
+                alert(`You've selected ${selectedPlan.toUpperCase()}! This would typically redirect to a signup or checkout process.`);
+                console.log(`✅ User chose plan: ${selectedPlan}`);
+                closeModal('rear-modal');
                 
-                // Update simulator display
-                if (simScale) simScale.textContent = `${scale.toFixed(1)}x`;
+                // Reset selection for next time
+                selectedPlan = null;
+                document.querySelectorAll('.plan-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+            } else {
+                alert('Please select a plan first.');
+            }
+        }
+        
+        function addDragScrolling(container) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let isDragging = false;
+            
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                isDragging = false;
+                container.style.cursor = 'grabbing';
+                startX = e.pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+                e.preventDefault();
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+            });
+            
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+            });
+            
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                isDragging = true;
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startX) * 2; // Scroll speed multiplier
+                container.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Prevent click events when dragging
+            container.addEventListener('click', (e) => {
+                if (isDragging) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
+            
+            // Set initial cursor style
+            container.style.cursor = 'grab';
+        }
+        
+        function initializePlansGallery() {
+            // Initialize custom scrollbar for plans
+            const gallery = document.querySelector('.plan-selection');
+            const scrollbarThumb = document.querySelector('.plans-scrollbar .scrollbar-thumb');
+            
+            if (gallery && scrollbarThumb) {
+                // Add drag scrolling functionality
+                addDragScrolling(gallery);
+                
+                function updateScrollbar() {
+                    const scrollLeft = gallery.scrollLeft;
+                    const scrollWidth = gallery.scrollWidth - gallery.clientWidth;
+                    const scrollPercentage = scrollWidth > 0 ? scrollLeft / scrollWidth : 0;
+                    const trackWidth = gallery.clientWidth;
+                    const thumbWidth = Math.max(trackWidth * 0.25, 60); // Minimum 60px width
+                    const thumbPosition = scrollPercentage * (trackWidth - thumbWidth);
+                    
+                    scrollbarThumb.style.width = `${(thumbWidth / trackWidth) * 100}%`;
+                    scrollbarThumb.style.left = `${(thumbPosition / trackWidth) * 100}%`;
+                }
+                
+                gallery.addEventListener('scroll', updateScrollbar);
+                window.addEventListener('resize', updateScrollbar);
+                
+                // Initialize scrollbar on first load
+                setTimeout(updateScrollbar, 100);
+            }
+        }
+        
+        // Make functions globally accessible
+        window.selectPlan = selectPlan;
+        window.choosePlan = choosePlan;
+
+        // --- PERKS SELECTION FUNCTIONALITY ---
+        let selectedPerks = new Set();
+        
+        function selectPerk(perkId) {
+            const perkItem = document.querySelector(`[data-perk="${perkId}"]`);
+            if (perkItem) {
+                if (selectedPerks.has(perkId)) {
+                    // Deselect if already selected
+                    selectedPerks.delete(perkId);
+                    perkItem.classList.remove('selected');
+                } else {
+                    // Select the perk
+                    selectedPerks.add(perkId);
+                    perkItem.classList.add('selected');
+                }
+                console.log(`🎁 Toggled perk: ${perkId}, Selected perks:`, Array.from(selectedPerks));
+            }
+        }
+        
+        function selectAllPerks() {
+            const allPerks = ['perk1', 'perk2', 'perk3', 'perk4', 'perk5'];
+            allPerks.forEach(perkId => {
+                selectedPerks.add(perkId);
+                const perkItem = document.querySelector(`[data-perk="${perkId}"]`);
+                if (perkItem) {
+                    perkItem.classList.add('selected');
+                }
+            });
+            
+            alert(`Great choice! You've selected all available perks. This would typically add them to your plan.`);
+            console.log(`✅ User selected all perks:`, Array.from(selectedPerks));
+            closeModal('led-modal');
+            
+            // Reset selection for next time
+            selectedPerks.clear();
+            document.querySelectorAll('.perk-item').forEach(item => {
+                item.classList.remove('selected');
             });
         }
+        
+        function initializePerksGallery() {
+            // Add click handlers to perk items
+            document.querySelectorAll('.perk-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const perkId = item.getAttribute('data-perk');
+                    selectPerk(perkId);
+                });
+            });
+            
+            // Initialize custom scrollbar
+            const gallery = document.querySelector('.perks-gallery');
+            const scrollbarThumb = document.querySelector('.scrollbar-thumb');
+            
+            if (gallery && scrollbarThumb) {
+                // Add drag scrolling functionality
+                addDragScrolling(gallery);
+                
+                function updateScrollbar() {
+                    const scrollLeft = gallery.scrollLeft;
+                    const scrollWidth = gallery.scrollWidth - gallery.clientWidth;
+                    const scrollPercentage = scrollWidth > 0 ? scrollLeft / scrollWidth : 0;
+                    const trackWidth = gallery.clientWidth;
+                    const thumbWidth = Math.max(trackWidth * 0.2, 50); // Minimum 50px width
+                    const thumbPosition = scrollPercentage * (trackWidth - thumbWidth);
+                    
+                    scrollbarThumb.style.width = `${(thumbWidth / trackWidth) * 100}%`;
+                    scrollbarThumb.style.left = `${(thumbPosition / trackWidth) * 100}%`;
+                }
+                
+                gallery.addEventListener('scroll', updateScrollbar);
+                window.addEventListener('resize', updateScrollbar);
+                
+                // Initialize scrollbar on first load
+                setTimeout(updateScrollbar, 100);
+            }
+        }
+        
+        // Make functions globally accessible
+        window.selectPerk = selectPerk;
+        window.selectAllPerks = selectAllPerks;
+
+
 
         // --- HOTSPOT & MODAL FUNCTIONALITY ---
         
@@ -2132,7 +1580,7 @@
         function setupHotspots() {
             console.log('🔍 Setting up hotspots...');
             
-            // Wi-Fi 6E hotspot (currently no specific modal, could show info)
+            // Wi-Fi 6E hotspot
             const wifiHotspot = document.getElementById('wifi-hotspot');
             if (wifiHotspot) {
                 console.log('✅ Found wifi-hotspot element');
@@ -2140,8 +1588,7 @@
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('📶 Wi-Fi 6E info clicked');
-                    // Could open a Wi-Fi info modal in the future
-                    alert('Wi-Fi 6E Technology\n\nThis router features the latest Wi-Fi 6E technology for ultra-fast wireless connections with reduced interference.');
+                    openModal('wifi-modal');
                 });
             } else {
                 console.log('❌ wifi-hotspot element not found');
@@ -2156,20 +1603,24 @@
                     e.stopPropagation();
                     console.log('🔌 Rear panel clicked');
                     openModal('rear-modal');
+                    // Initialize plans gallery after modal opens
+                    setTimeout(initializePlansGallery, 100);
                 });
             } else {
                 console.log('❌ rear-hotspot element not found');
             }
             
-            // LED status hotspot
+            // LED status hotspot (now perks)
             const ledHotspot = document.getElementById('led-hotspot');
             if (ledHotspot) {
                 console.log('✅ Found led-hotspot element');
                 ledHotspot.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('💡 LED status clicked');
+                    console.log('🎁 Choose perks clicked');
                     openModal('led-modal');
+                    // Initialize perks gallery after modal opens
+                    setTimeout(initializePerksGallery, 100);
                 });
             } else {
                 console.log('❌ led-hotspot element not found');
@@ -2232,599 +1683,28 @@
             setupHotspots();
         }, 2000);
 
-        // --- MENU FUNCTIONALITY ---
-        
-        // Menu toggle functionality
-        function setupMenu() {
-            if (menuToggle && sideMenu) {
-                menuToggle.addEventListener('click', () => {
-                    sideMenu.classList.toggle('open');
-                    console.log('🍔 Menu toggled');
-                });
-            }
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (sideMenu && sideMenu.classList.contains('open')) {
-                    if (!sideMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                        sideMenu.classList.remove('open');
-                    }
-                }
-            });
-        }
-        
-        // --- ACCESSORY FUNCTIONALITY ---
-        
-        // Accessory button functionality
-        function setupAccessories() {
-            const accessoryButtons = document.querySelectorAll('.add-accessory-btn');
-            accessoryButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const accessoryName = button.getAttribute('data-accessory');
-                    
-                    if (button.classList.contains('added')) {
-                        // Remove from cart
-                        button.classList.remove('added');
-                        button.textContent = 'Add to Cart';
-                        removeFromStoredCart(accessoryName);
-                        console.log(`🛒 Removed ${accessoryName} from cart`);
-                    } else {
-                        // Add to cart and redirect to cart page
-                        addToStoredCart(accessoryName);
-                        console.log(`🛒 Added ${accessoryName} to cart`);
-                        
-                        // Show brief feedback then redirect
-                        button.classList.add('added');
-                        button.textContent = '✓ Added';
-                        
-                        setTimeout(() => {
-                            openCartPage();
-                        }, 500);
-                    }
-                });
-            });
-        }
-        
-        // Cart storage functions
-        function addToStoredCart(accessoryName) {
-            let cart = JSON.parse(localStorage.getItem('verizonCart') || '{"accessories": []}');
-            
-            const accessoryMap = {
-                'Wall Mounting Bracket': { id: 'wall-mount', name: 'Wall Mounting Bracket', price: 29.99 },
-                'Ethernet Cable': { id: 'ethernet-cable', name: 'Ethernet Cable (25ft)', price: 19.99 },
-                'Range Extender': { id: 'range-extender', name: '5G Range Extender', price: 149.99 }
-            };
-            
-            const accessory = accessoryMap[accessoryName];
-            if (accessory && !cart.accessories.find(acc => acc.id === accessory.id)) {
-                cart.accessories.push(accessory);
-                localStorage.setItem('verizonCart', JSON.stringify(cart));
-                updateCartCounter();
-            }
-        }
-        
-        function removeFromStoredCart(accessoryName) {
-            let cart = JSON.parse(localStorage.getItem('verizonCart') || '{"accessories": []}');
-            
-            const accessoryMap = {
-                'Wall Mounting Bracket': 'wall-mount',
-                'Ethernet Cable': 'ethernet-cable',
-                'Range Extender': 'range-extender'
-            };
-            
-            const accessoryId = accessoryMap[accessoryName];
-            if (accessoryId) {
-                cart.accessories = cart.accessories.filter(acc => acc.id !== accessoryId);
-                localStorage.setItem('verizonCart', JSON.stringify(cart));
-                updateCartCounter();
-            }
-        }
-        
-        function openCartPage() {
-            // Open cart page in same window
-            window.location.href = 'cart.html';
-        }
-        
+        // Essential functions for floating buttons
         function openCameraScanner() {
             // Open camera scanner page for existing router owners
             window.location.href = 'camera-scanner.html';
         }
         
         function tryInRoom() {
-            // Trigger AR mode for the current page
-            const arButton = document.getElementById('ar-button');
-            if (arButton) {
-                arButton.click();
-            }
-        }
-        
-        function updateFloatingButtons(state) {
-            const tryArBtn = document.getElementById('try-ar-btn');
-            const scanRouterBtn = document.getElementById('scan-router-btn');
-            
-            if (!tryArBtn || !scanRouterBtn) return;
-            
-            switch(state) {
-                case 'ar-active':
-                    // Hide both buttons when AR is active
-                    tryArBtn.style.display = 'none';
-                    scanRouterBtn.style.display = 'none';
-                    break;
-                case 'post-purchase':
-                    // Show both buttons for post-purchase customers
-                    tryArBtn.style.display = 'flex';
-                    scanRouterBtn.style.display = 'flex';
-                    // Highlight scan button for existing customers
-                    scanRouterBtn.style.animation = 'pulse 2s infinite';
-                    break;
-                case 'normal':
-                default:
-                    // Show both buttons in normal state
-                    tryArBtn.style.display = 'flex';
-                    scanRouterBtn.style.display = 'flex';
-                    scanRouterBtn.style.animation = 'none';
-                    break;
-            }
-        }
-
-        // --- BUYING EXPERIENCE FUNCTIONALITY ---
-        
-        let selectedPlan = null;
-        let selectedAccessories = [];
-        let routerPurchased = false;
-        
-        // Plan and accessory data
-        const plans = {
-            basic: { name: "Basic FiOS", speed: "200 Mbps", price: 39.99 },
-            gigabit: { name: "Gigabit FiOS", speed: "1000 Mbps", price: 64.99 },
-            ultra: { name: "Ultra FiOS", speed: "2000 Mbps", price: 89.99 }
-        };
-        
-        const accessories = {
-            mesh: { name: "Mesh Network Extender", price: 149.99, isMonthly: false },
-            security: { name: "Advanced Security Package", price: 9.99, isMonthly: true },
-            support: { name: "Premium Tech Support", price: 14.99, isMonthly: true },
-            cloud: { name: "Cloud Storage Plus", price: 12.99, isMonthly: true }
-        };
-        
-        // Open plan selection modal
-        function openPlanModal() {
-            const modal = document.getElementById('plan-selection-modal');
-            if (modal) {
-                modal.style.display = 'block';
-                console.log('🛒 Opened plan selection modal');
-            }
-        }
-        
-        // Close plan selection modal
-        function closePlanModal() {
-            const modal = document.getElementById('plan-selection-modal');
-            if (modal) {
-                modal.style.display = 'none';
-                console.log('❌ Closed plan selection modal');
-            }
-        }
-        
-        // Setup buying experience
-        function setupBuyingExperience() {
-            const buyButton = document.getElementById('buy-router-btn');
-            if (buyButton) {
-                buyButton.addEventListener('click', openPlanModal);
-            }
-            
-            // Plan card selection
-            const planCards = document.querySelectorAll('.plan-card');
-            planCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    // Remove selection from other cards
-                    planCards.forEach(c => c.classList.remove('selected'));
-                    // Select this card
-                    card.classList.add('selected');
-                    
-                    selectedPlan = card.getAttribute('data-plan');
-                    updatePurchaseSummary();
-                    
-                    console.log(`📊 Selected plan: ${selectedPlan}`);
-                });
-            });
-            
-            // Accessory card selection
-            const accessoryCards = document.querySelectorAll('.accessory-card');
-            accessoryCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const accessoryId = card.getAttribute('data-accessory');
-                    
-                    if (card.classList.contains('selected')) {
-                        // Deselect
-                        card.classList.remove('selected');
-                        selectedAccessories = selectedAccessories.filter(id => id !== accessoryId);
-                    } else {
-                        // Select
-                        card.classList.add('selected');
-                        selectedAccessories.push(accessoryId);
-                    }
-                    
-                    updatePurchaseSummary();
-                    console.log(`🎁 Selected accessories: ${selectedAccessories.join(', ')}`);
-                });
-            });
-            
-            // Complete purchase button
-            const completePurchaseBtn = document.getElementById('complete-purchase-btn');
-            if (completePurchaseBtn) {
-                completePurchaseBtn.addEventListener('click', processPurchase);
-            }
-        }
-        
-        // Update purchase summary
-        function updatePurchaseSummary() {
-            const selectedPlanElement = document.getElementById('selected-plan');
-            const selectedAccessoriesElement = document.getElementById('selected-accessories');
-            const monthlyTotalElement = document.getElementById('monthly-total');
-            const todayTotalElement = document.getElementById('today-total');
-            const completePurchaseBtn = document.getElementById('complete-purchase-btn');
-            
-            let monthlyTotal = 0;
-            let todayTotal = 399.99; // Router price
-            
-            // Update plan selection
-            if (selectedPlan && plans[selectedPlan]) {
-                const plan = plans[selectedPlan];
-                selectedPlanElement.innerHTML = `
-                    <span>${plan.name} (${plan.speed}):</span>
-                    <span>$${plan.price}/mo</span>
-                `;
-                monthlyTotal += plan.price;
+            // Trigger AR mode directly
+            if (modelViewer && modelViewer.canActivateAR) {
+                console.log('🚀 Activating AR mode');
+                modelViewer.activateAR();
             } else {
-                selectedPlanElement.innerHTML = `
-                    <span>Internet Plan:</span>
-                    <span>Select a plan</span>
-                `;
-            }
-            
-            // Update accessories
-            selectedAccessoriesElement.innerHTML = '';
-            selectedAccessories.forEach(accessoryId => {
-                const accessory = accessories[accessoryId];
-                if (accessory) {
-                    const accessoryElement = document.createElement('div');
-                    accessoryElement.className = 'summary-item';
-                    
-                    if (accessory.isMonthly) {
-                        accessoryElement.innerHTML = `
-                            <span>${accessory.name}:</span>
-                            <span>$${accessory.price}/mo</span>
-                        `;
-                        monthlyTotal += accessory.price;
-                    } else {
-                        accessoryElement.innerHTML = `
-                            <span>${accessory.name}:</span>
-                            <span>$${accessory.price}</span>
-                        `;
-                        todayTotal += accessory.price;
-                    }
-                    
-                    selectedAccessoriesElement.appendChild(accessoryElement);
-                }
-            });
-            
-            // Update totals
-            monthlyTotalElement.textContent = `$${monthlyTotal.toFixed(2)}/mo`;
-            todayTotalElement.textContent = `$${todayTotal.toFixed(2)}`;
-            
-            // Enable/disable purchase button
-            if (selectedPlan && completePurchaseBtn) {
-                completePurchaseBtn.disabled = false;
-                completePurchaseBtn.textContent = 'Complete Purchase';
-            } else if (completePurchaseBtn) {
-                completePurchaseBtn.disabled = true;
-                completePurchaseBtn.textContent = 'Select a Plan First';
-            }
-        }
-        
-        // Process purchase
-        function processPurchase() {
-            if (!selectedPlan) {
-                alert('Please select an internet plan first.');
-                return;
-            }
-            
-            // Close plan modal
-            closePlanModal();
-            
-            // Show loading state
-            const buyButton = document.getElementById('buy-router-btn');
-            if (buyButton) {
-                buyButton.textContent = '⏳ Processing...';
-                buyButton.disabled = true;
-            }
-            
-            // Simulate processing time
-            setTimeout(() => {
-                showPurchaseSuccess();
-            }, 2000);
-            
-            console.log('💳 Processing purchase...', {
-                plan: selectedPlan,
-                accessories: selectedAccessories
-            });
-        }
-        
-        // Show purchase success
-        function showPurchaseSuccess() {
-            const successModal = document.getElementById('purchase-success-modal');
-            if (successModal) {
-                successModal.style.display = 'block';
-            }
-        }
-        
-        // Complete purchase flow and enable post-purchase features
-        function completePurchaseFlow() {
-            routerPurchased = true;
-            
-            // Close success modal
-            const successModal = document.getElementById('purchase-success-modal');
-            if (successModal) {
-                successModal.style.display = 'none';
-            }
-            
-            // Update UI to show purchase completed
-            const buyButton = document.getElementById('buy-router-btn');
-            if (buyButton) {
-                buyButton.textContent = '✅ Router Purchased';
-                buyButton.style.background = '#28a745';
-                buyButton.disabled = true;
-            }
-            
-            // Add post-purchase hotspots
-            addPostPurchaseHotspots();
-            
-            // Update floating buttons for post-purchase state
-            updateFloatingButtons('post-purchase');
-            
-            console.log('🎉 Purchase completed! Post-purchase features enabled.');
-        }
-        
-        // Add post-purchase interactive hotspots
-        function addPostPurchaseHotspots() {
-            // Plan management hotspot
-            const planHotspot = document.createElement('button');
-            planHotspot.className = 'hotspot post-purchase-hotspot';
-            planHotspot.setAttribute('slot', 'hotspot-plans');
-            planHotspot.setAttribute('data-position', '1.2 0.8 0.5');
-            planHotspot.setAttribute('data-normal', '1 0 0');
-            planHotspot.id = 'plans-hotspot';
-            planHotspot.innerHTML = '<div class="annotation">Manage Plans</div>';
-            
-            // Upgrade hotspot
-            const upgradeHotspot = document.createElement('button');
-            upgradeHotspot.className = 'hotspot post-purchase-hotspot';
-            upgradeHotspot.setAttribute('slot', 'hotspot-upgrades');
-            upgradeHotspot.setAttribute('data-position', '-1.2 0.8 0.5');
-            upgradeHotspot.setAttribute('data-normal', '-1 0 0');
-            upgradeHotspot.id = 'upgrades-hotspot';
-            upgradeHotspot.innerHTML = '<div class="annotation">Available Upgrades</div>';
-            
-            // Support hotspot
-            const supportHotspot = document.createElement('button');
-            supportHotspot.className = 'hotspot post-purchase-hotspot';
-            supportHotspot.setAttribute('slot', 'hotspot-support');
-            supportHotspot.setAttribute('data-position', '0 1.5 0');
-            supportHotspot.setAttribute('data-normal', '0 1 0');
-            supportHotspot.id = 'support-hotspot';
-            supportHotspot.innerHTML = '<div class="annotation">Customer Support</div>';
-            
-            // Add to model viewer
-            modelViewer.appendChild(planHotspot);
-            modelViewer.appendChild(upgradeHotspot);
-            modelViewer.appendChild(supportHotspot);
-            
-            // Add event listeners
-            planHotspot.addEventListener('click', (e) => {
-                e.preventDefault();
-                showPlansInfo();
-            });
-            
-            upgradeHotspot.addEventListener('click', (e) => {
-                e.preventDefault();
-                showUpgradesInfo();
-            });
-            
-            supportHotspot.addEventListener('click', (e) => {
-                e.preventDefault();
-                showSupportInfo();
-            });
-            
-            console.log('🎯 Post-purchase hotspots added');
-        }
-        
-        // Post-purchase info functions
-        function showPlansInfo() {
-            const planInfo = plans[selectedPlan];
-            alert(`📊 Current Plan: ${planInfo.name}\n\nSpeed: ${planInfo.speed}\nPrice: $${planInfo.price}/month\n\nYou can upgrade or change your plan anytime in your Verizon account.`);
-        }
-        
-        function showUpgradesInfo() {
-            alert(`🚀 Available Upgrades:\n\n• Stream more devices with higher speeds\n• Add premium security features\n• Upgrade to Wi-Fi 7 when available\n• Add mesh network coverage\n\nContact support to explore upgrade options!`);
-        }
-        
-        function showSupportInfo() {
-            const hasPhysicalRouter = confirm(`🛠️ Customer Support Options:\n\n📞 Call: 1-800-VERIZON\n💬 Chat: Available 24/7 online\n📧 Email: support@verizon.com\n🏪 Store: Find locations near you\n📱 Camera Scanner: Scan your physical router for instant AR help\n\nYour account includes premium support!\n\nDo you have your physical router nearby? Click OK to use our camera scanner feature!`);
-            
-            if (hasPhysicalRouter) {
-                window.open('camera-scanner.html', '_blank');
-            }
-        }
-        
-        // Make functions globally accessible
-        window.closePlanModal = closePlanModal;
-        window.completePurchaseFlow = completePurchaseFlow;
-
-        // --- AR BUTTON FUNCTIONALITY ---
-        
-        // AR button event listener
-        function setupArButton() {
-            if (arButton) {
-                arButton.addEventListener('click', () => {
-                    if (modelViewer.canActivateAR) {
-                        console.log('🚀 Activating AR mode');
-                        modelViewer.activateAR();
-                    } else {
-                        console.log('❌ AR not supported on this device');
-                        alert('AR is not supported on this device. Please use an AR-capable mobile device with iOS Safari or Android Chrome.');
-                    }
-                });
+                console.log('❌ AR not supported on this device');
+                alert('AR is not supported on this device. Please use an AR-capable mobile device with iOS Safari or Android Chrome.');
             }
         }
 
         // Initialize all functionality when page loads
         document.addEventListener('DOMContentLoaded', () => {
             setupHotspots();
-            setupMenu();
-            setupAccessories();
-            setupArButton(); // <-- Add this line to initialize AR button functionality
-            setupBuyingExperience(); // Initialize buying experience functionality
-            updateCartCounter(); // Update cart counter on page load
-            checkPurchaseStatus(); // Check if returning from successful purchase
-            
-            // Initialize floating buttons in normal state
-            setTimeout(() => {
-                updateFloatingButtons('normal');
-            }, 500); // Small delay to ensure elements are ready
-            
             console.log('🚀 All interactive features initialized');
         });
-        
-        // Update cart counter from localStorage
-        function updateCartCounter() {
-            const cart = JSON.parse(localStorage.getItem('verizonCart') || '{"accessories": []}');
-            const cartCount = cart.accessories ? cart.accessories.length : 0;
-            const cartCountElement = document.getElementById('cart-count');
-            if (cartCountElement) {
-                cartCountElement.textContent = cartCount;
-            }
-        }
-        
-        // Check if returning from successful purchase
-        function checkPurchaseStatus() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const purchased = urlParams.get('purchased');
-            const isPurchased = localStorage.getItem('verizonPurchased');
-            
-            if (purchased === 'true' || isPurchased === 'true') {
-                // User completed purchase, show post-purchase hotspots
-                setTimeout(() => {
-                    addPostPurchaseHotspots();
-                    showPurchaseConfirmation();
-                    // Update floating buttons for post-purchase customers
-                    updateFloatingButtons('post-purchase');
-                }, 1000);
-                
-                // Clean URL
-                if (purchased) {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-            }
-        }
-        
-        // Show purchase confirmation
-        function showPurchaseConfirmation() {
-            showInfoModal(`
-                <h3 style="color: #28a745; margin-bottom: 20px;">🎉 Purchase Successful!</h3>
-                <p style="margin-bottom: 20px;">Thank you for choosing Verizon 5G! Your router and services are being set up.</p>
-                <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #28a745;">
-                    <strong>What's Next:</strong><br>
-                    • Your 5G router will arrive in 2-3 business days<br>
-                    • Installation guide will be included<br>
-                    • Your plan will be activated upon device setup<br>
-                    • Look for new green hotspots for account management
-                </div>
-                <p style="color: #aaa; font-size: 14px;">You can manage your account, upgrade services, and get support using the interactive hotspots on your router.</p>
-            `);
-        }
-        
-        // Add post-purchase hotspots (green ones)
-        function addPostPurchaseHotspots() {
-            // Only add if not already present
-            if (document.querySelector('.post-purchase-hotspot')) return;
-            
-            const modelViewer = document.querySelector('model-viewer');
-            
-            // Account Management hotspot
-            const accountHotspot = document.createElement('button');
-            accountHotspot.className = 'hotspot post-purchase-hotspot';
-            accountHotspot.setAttribute('slot', 'hotspot-account');
-            accountHotspot.setAttribute('data-position', '0.8 0.4 0.2');
-            accountHotspot.setAttribute('data-normal', '0 1 0');
-            accountHotspot.style.background = '#28a745';
-            accountHotspot.innerHTML = '💼';
-            accountHotspot.addEventListener('click', () => {
-                showInfoModal(`
-                    <h3 style="color: #28a745;">💼 Account Management</h3>
-                    <p>Manage your Verizon 5G account and services:</p>
-                    <ul style="text-align: left; margin: 20px 0;">
-                        <li>✅ View current plan and usage</li>
-                        <li>📱 Manage connected devices</li>
-                        <li>💳 Update payment methods</li>
-                        <li>📊 View data usage analytics</li>
-                        <li>⚙️ Configure network settings</li>
-                    </ul>
-                    <button onclick="closeInfoModal()" style="background: #28a745; border: none; color: white; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Access Account</button>
-                `);
-            });
-            
-            // Plan Upgrade hotspot
-            const upgradeHotspot = document.createElement('button');
-            upgradeHotspot.className = 'hotspot post-purchase-hotspot';
-            upgradeHotspot.setAttribute('slot', 'hotspot-upgrade');
-            upgradeHotspot.setAttribute('data-position', '-0.8 0.4 0.2');
-            upgradeHotspot.setAttribute('data-normal', '0 1 0');
-            upgradeHotspot.style.background = '#28a745';
-            upgradeHotspot.innerHTML = '⬆️';
-            upgradeHotspot.addEventListener('click', () => {
-                showInfoModal(`
-                    <h3 style="color: #28a745;">⬆️ Plan Upgrades</h3>
-                    <p>Available upgrade options for your 5G service:</p>
-                    <ul style="text-align: left; margin: 20px 0;">
-                        <li>🚀 Upgrade to Unlimited Ultimate</li>
-                        <li>🔥 Add more hotspot data</li>
-                        <li>📺 Include premium streaming</li>
-                        <li>🌍 Add international features</li>
-                        <li>☁️ Increase cloud storage</li>
-                    </ul>
-                    <button onclick="closeInfoModal()" style="background: #28a745; border: none; color: white; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">View Upgrades</button>
-                `);
-            });
-            
-            // Support hotspot
-            const supportHotspot = document.createElement('button');
-            supportHotspot.className = 'hotspot post-purchase-hotspot';
-            supportHotspot.setAttribute('slot', 'hotspot-support');
-            supportHotspot.setAttribute('data-position', '0 0.7 0.8');
-            supportHotspot.setAttribute('data-normal', '0 0 1');
-            supportHotspot.style.background = '#28a745';
-            supportHotspot.innerHTML = '🛠️';
-            supportHotspot.addEventListener('click', () => {
-                showInfoModal(`
-                    <h3 style="color: #28a745;">🛠️ Customer Support</h3>
-                    <p>Get help with your Verizon 5G service:</p>
-                    <ul style="text-align: left; margin: 20px 0;">
-                        <li>📞 24/7 technical support</li>
-                        <li>💬 Live chat assistance</li>
-                        <li>📖 Setup and troubleshooting guides</li>
-                        <li>🔧 Remote diagnostics</li>
-                        <li>📍 Find nearest Verizon store</li>
-                    </ul>
-                    <button onclick="closeInfoModal()" style="background: #28a745; border: none; color: white; padding: 10px 20px; border-radius: 5px; margin-top: 15px;">Get Support</button>
-                `);
-            });
-            
-            modelViewer.appendChild(accountHotspot);
-            modelViewer.appendChild(upgradeHotspot);
-            modelViewer.appendChild(supportHotspot);
-            
-            console.log('✅ Post-purchase hotspots added');
-        }
     </script>
 
     <!-- Floating Action Buttons -->

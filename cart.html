@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verizon 5G Cart - Interactive Shopping</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .cart-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .cart-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ff0037;
+        }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Main Container */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Shopping Area */
+        .shopping-area {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ff0037;
+        }
+        
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid transparent;
+            cursor: grab;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            border-color: #ff0037;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 55, 0.3);
+        }
+        
+        .product-card.dragging {
+            opacity: 0.7;
+            transform: rotate(5deg);
+            cursor: grabbing;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff0037;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            color: #ff0037;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .product-features {
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.4;
+        }
+        
+        /* Interactive Hotspots on Products */
+        .product-hotspot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff0037;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .product-hotspot:hover {
+            transform: scale(1.2);
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 55, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 0, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 55, 0); }
+        }
+        
+        /* Drop Zones */
+        .drop-zone {
+            min-height: 150px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .drop-zone.drag-over {
+            border-color: #ff0037;
+            background: rgba(255, 0, 55, 0.1);
+        }
+        
+        .drop-zone-content {
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .drop-zone.has-items {
+            border-style: solid;
+            background: rgba(255, 0, 55, 0.05);
+        }
+        
+        .dropped-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #ff0037;
+        }
+        
+        .remove-item {
+            background: rgba(255, 0, 55, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .remove-item:hover {
+            background: #ff0037;
+        }
+        
+        /* Cart Summary */
+        .cart-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 18px;
+            color: #ff0037;
+        }
+        
+        /* Payment Section */
+        .payment-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .payment-method {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .payment-method:hover,
+        .payment-method.selected {
+            border-color: #ff0037;
+            background: rgba(255, 0, 55, 0.1);
+        }
+        
+        .payment-icon {
+            width: 30px;
+            height: 30px;
+            background: #ff0037;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #ff0037, #ff4567);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 55, 0.4);
+        }
+        
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .cart-summary {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-container {
+                padding: 15px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-header {
+                padding: 15px;
+            }
+            
+            .cart-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="cart-header">
+        <h1 class="cart-title">🛒 Verizon 5G Shopping Cart</h1>
+        <button class="back-btn" onclick="goBack()">← Back to AR Experience</button>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="cart-container">
+        <!-- Shopping Area -->
+        <div class="shopping-area">
+            <!-- 5G Plans Section -->
+            <div class="section-title">📶 Select Your 5G Plan</div>
+            <div class="products-grid" id="plans-grid">
+                <div class="product-card" draggable="true" data-type="plan" data-id="unlimited-plus" data-price="80">
+                    <div class="product-badge">POPULAR</div>
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showPlanDetails('unlimited-plus')">i</div>
+                    <div class="product-name">5G Unlimited Plus</div>
+                    <div class="product-price">$80/month</div>
+                    <div class="product-features">
+                        • Unlimited 5G Ultra Wideband<br>
+                        • Premium streaming included<br>
+                        • Mobile hotspot: 50GB<br>
+                        • International calling
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="plan" data-id="unlimited-welcome" data-price="65">
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showPlanDetails('unlimited-welcome')">i</div>
+                    <div class="product-name">5G Unlimited Welcome</div>
+                    <div class="product-price">$65/month</div>
+                    <div class="product-features">
+                        • Unlimited 5G nationwide<br>
+                        • Basic streaming quality<br>
+                        • Mobile hotspot: 5GB<br>
+                        • Standard support
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="plan" data-id="unlimited-ultimate" data-price="100">
+                    <div class="product-badge">PREMIUM</div>
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showPlanDetails('unlimited-ultimate')">i</div>
+                    <div class="product-name">5G Unlimited Ultimate</div>
+                    <div class="product-price">$100/month</div>
+                    <div class="product-features">
+                        • Unlimited 5G Ultra Wideband<br>
+                        • Premium streaming + cloud<br>
+                        • Mobile hotspot: 100GB<br>
+                        • Priority support & international
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plan Drop Zone -->
+            <div class="drop-zone" id="plan-drop-zone">
+                <div class="drop-zone-content">
+                    <strong>Drag your selected plan here</strong><br>
+                    Choose one 5G plan for your router
+                </div>
+            </div>
+            
+            <!-- Accessories Section -->
+            <div class="section-title">🔧 Add Accessories & Perks</div>
+            <div class="products-grid" id="accessories-grid">
+                <div class="product-card" draggable="true" data-type="accessory" data-id="wall-mount" data-price="29.99">
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('wall-mount')">i</div>
+                    <div class="product-name">Wall Mounting Bracket</div>
+                    <div class="product-price">$29.99</div>
+                    <div class="product-features">
+                        • Professional installation kit<br>
+                        • Optimal signal positioning<br>
+                        • Cable management included
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="accessory" data-id="ethernet-cable" data-price="19.99">
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('ethernet-cable')">i</div>
+                    <div class="product-name">Ethernet Cable (25ft)</div>
+                    <div class="product-price">$19.99</div>
+                    <div class="product-features">
+                        • Cat 6 high-speed cable<br>
+                        • 25-foot length<br>
+                        • Gigabit performance
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="accessory" data-id="range-extender" data-price="149.99">
+                    <div class="product-badge">BOOST</div>
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('range-extender')">i</div>
+                    <div class="product-name">5G Range Extender</div>
+                    <div class="product-price">$149.99</div>
+                    <div class="product-features">
+                        • Extends 5G coverage<br>
+                        • Mesh network support<br>
+                        • Easy setup via app
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="accessory" data-id="protection-plan" data-price="9.99">
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('protection-plan')">i</div>
+                    <div class="product-name">Device Protection</div>
+                    <div class="product-price">$9.99/month</div>
+                    <div class="product-features">
+                        • Total equipment protection<br>
+                        • Same-day replacement<br>
+                        • 24/7 tech support
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="accessory" data-id="premium-support" data-price="15">
+                    <div class="product-badge">VIP</div>
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('premium-support')">i</div>
+                    <div class="product-name">Premium Support</div>
+                    <div class="product-price">$15/month</div>
+                    <div class="product-features">
+                        • Priority customer service<br>
+                        • White-glove setup<br>
+                        • Advanced troubleshooting
+                    </div>
+                </div>
+                
+                <div class="product-card" draggable="true" data-type="accessory" data-id="cloud-storage" data-price="12">
+                    <div class="product-hotspot" style="top: 15px; left: 15px;" onclick="showAccessoryDetails('cloud-storage')">i</div>
+                    <div class="product-name">Verizon Cloud (1TB)</div>
+                    <div class="product-price">$12/month</div>
+                    <div class="product-features">
+                        • 1TB secure cloud storage<br>
+                        • Auto backup for devices<br>
+                        • Cross-platform access
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accessories Drop Zone -->
+            <div class="drop-zone" id="accessories-drop-zone">
+                <div class="drop-zone-content">
+                    <strong>Drag accessories & perks here</strong><br>
+                    Add any accessories or services to enhance your 5G experience
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h3 class="section-title">📋 Order Summary</h3>
+            
+            <!-- Router -->
+            <div class="summary-item">
+                <span>Verizon 5G Home Router</span>
+                <span>$299.99</span>
+            </div>
+            
+            <!-- Dynamic items will be added here -->
+            <div id="dynamic-summary"></div>
+            
+            <!-- Total -->
+            <div class="summary-item">
+                <span><strong>Total</strong></span>
+                <span id="total-price"><strong>$299.99</strong></span>
+            </div>
+            
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h4 style="margin-bottom: 15px;">💳 Payment Method</h4>
+                
+                <div class="payment-method" onclick="selectPayment('credit')">
+                    <div class="payment-icon">💳</div>
+                    <div>
+                        <div><strong>Credit/Debit Card</strong></div>
+                        <div style="font-size: 12px; color: #aaa;">Visa, Mastercard, Amex</div>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('paypal')">
+                    <div class="payment-icon">🅿️</div>
+                    <div>
+                        <div><strong>PayPal</strong></div>
+                        <div style="font-size: 12px; color: #aaa;">Fast & secure</div>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('financing')">
+                    <div class="payment-icon">📊</div>
+                    <div>
+                        <div><strong>Device Financing</strong></div>
+                        <div style="font-size: 12px; color: #aaa;">0% APR for 24 months</div>
+                    </div>
+                </div>
+                
+                <button class="checkout-btn" id="checkout-btn" onclick="processCheckout()" disabled>
+                    Select a plan to continue
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for product details -->
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Cart state
+        let cart = {
+            router: { name: 'Verizon 5G Home Router', price: 299.99, type: 'router' },
+            plan: null,
+            accessories: []
+        };
+        
+        let selectedPayment = null;
+        
+        // Initialize drag and drop
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDragAndDrop();
+            updateSummary();
+            
+            // Load cart items from localStorage if coming from main app
+            const savedCart = localStorage.getItem('verizonCart');
+            if (savedCart) {
+                const cartData = JSON.parse(savedCart);
+                // Pre-populate with any items from the main app
+                if (cartData.accessories) {
+                    cartData.accessories.forEach(accessory => {
+                        addToCart('accessory', accessory);
+                    });
+                }
+            }
+        });
+        
+        function initializeDragAndDrop() {
+            // Make all product cards draggable
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Set up drop zones
+            const dropZones = document.querySelectorAll('.drop-zone');
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('drop', handleDrop);
+                zone.addEventListener('dragenter', handleDragEnter);
+                zone.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+        
+        function handleDragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', JSON.stringify({
+                type: e.target.dataset.type,
+                id: e.target.dataset.id,
+                name: e.target.querySelector('.product-name').textContent,
+                price: parseFloat(e.target.dataset.price)
+            }));
+        }
+        
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+        
+        function handleDragEnter(e) {
+            e.preventDefault();
+            e.target.classList.add('drag-over');
+        }
+        
+        function handleDragLeave(e) {
+            if (!e.target.contains(e.relatedTarget)) {
+                e.target.classList.remove('drag-over');
+            }
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+            const dropZoneId = e.target.id || e.target.closest('.drop-zone').id;
+            
+            // Validate drop
+            if (dropZoneId === 'plan-drop-zone' && data.type === 'plan') {
+                addToCart('plan', data);
+            } else if (dropZoneId === 'accessories-drop-zone' && data.type === 'accessory') {
+                addToCart('accessory', data);
+            }
+        }
+        
+        function addToCart(type, item) {
+            if (type === 'plan') {
+                // Replace existing plan
+                cart.plan = item;
+                updateDropZone('plan-drop-zone', [item]);
+            } else if (type === 'accessory') {
+                // Add to accessories if not already present
+                const existingIndex = cart.accessories.findIndex(acc => acc.id === item.id);
+                if (existingIndex === -1) {
+                    cart.accessories.push(item);
+                    updateDropZone('accessories-drop-zone', cart.accessories);
+                }
+            }
+            
+            updateSummary();
+            updateCheckoutButton();
+            
+            // Show feedback
+            showFeedback(`✓ Added ${item.name} to cart`);
+        }
+        
+        function removeFromCart(type, itemId) {
+            if (type === 'plan') {
+                cart.plan = null;
+                updateDropZone('plan-drop-zone', []);
+            } else if (type === 'accessory') {
+                cart.accessories = cart.accessories.filter(acc => acc.id !== itemId);
+                updateDropZone('accessories-drop-zone', cart.accessories);
+            }
+            
+            updateSummary();
+            updateCheckoutButton();
+        }
+        
+        function updateDropZone(zoneId, items) {
+            const zone = document.getElementById(zoneId);
+            
+            if (items.length === 0) {
+                zone.classList.remove('has-items');
+                zone.innerHTML = `
+                    <div class="drop-zone-content">
+                        <strong>Drag your selected ${zoneId.includes('plan') ? 'plan' : 'accessories'} here</strong><br>
+                        ${zoneId.includes('plan') ? 'Choose one 5G plan for your router' : 'Add any accessories or services to enhance your 5G experience'}
+                    </div>
+                `;
+            } else {
+                zone.classList.add('has-items');
+                zone.innerHTML = items.map(item => `
+                    <div class="dropped-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <span style="color: #ff0037;">$${item.price}${item.name.includes('/month') ? '' : item.price % 1 === 0 ? '' : ''}</span>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart('${zoneId.includes('plan') ? 'plan' : 'accessory'}', '${item.id}')">Remove</button>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function updateSummary() {
+            const dynamicSummary = document.getElementById('dynamic-summary');
+            let total = cart.router.price;
+            let summaryHTML = '';
+            
+            // Add plan
+            if (cart.plan) {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span>${cart.plan.name}</span>
+                        <span>$${cart.plan.price}/month</span>
+                    </div>
+                `;
+                total += cart.plan.price; // For display purposes (monthly cost shown separately)
+            }
+            
+            // Add accessories
+            cart.accessories.forEach(accessory => {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span>${accessory.name}</span>
+                        <span>$${accessory.price}${accessory.name.includes('/month') ? '/month' : ''}</span>
+                    </div>
+                `;
+                total += accessory.price;
+            });
+            
+            dynamicSummary.innerHTML = summaryHTML;
+            
+            // Update total (router + one-time accessories, plan shown separately)
+            const oneTimeTotal = cart.router.price + cart.accessories.filter(acc => !acc.name.includes('/month')).reduce((sum, acc) => sum + acc.price, 0);
+            const monthlyTotal = (cart.plan ? cart.plan.price : 0) + cart.accessories.filter(acc => acc.name.includes('/month')).reduce((sum, acc) => sum + acc.price, 0);
+            
+            let totalText = `$${oneTimeTotal.toFixed(2)}`;
+            if (monthlyTotal > 0) {
+                totalText += ` + $${monthlyTotal}/month`;
+            }
+            
+            document.getElementById('total-price').innerHTML = `<strong>${totalText}</strong>`;
+        }
+        
+        function updateCheckoutButton() {
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if (!cart.plan) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.textContent = 'Select a plan to continue';
+            } else if (!selectedPayment) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.textContent = 'Select payment method';
+            } else {
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '🛒 Proceed to Checkout';
+            }
+        }
+        
+        function selectPayment(method) {
+            // Remove previous selection
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+            
+            // Select new method
+            event.target.closest('.payment-method').classList.add('selected');
+            selectedPayment = method;
+            
+            updateCheckoutButton();
+        }
+        
+        function processCheckout() {
+            if (!cart.plan || !selectedPayment) return;
+            
+            // Save cart state
+            localStorage.setItem('verizonCart', JSON.stringify(cart));
+            localStorage.setItem('verizonPayment', selectedPayment);
+            
+            // Show processing modal
+            showModal(`
+                <h3 style="color: #ff0037; margin-bottom: 20px;">🎉 Order Processing</h3>
+                <p style="margin-bottom: 20px;">Thank you for your purchase! Your order is being processed.</p>
+                <div style="background: rgba(255, 0, 55, 0.1); padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <strong>Order Summary:</strong><br>
+                    • ${cart.router.name}<br>
+                    ${cart.plan ? `• ${cart.plan.name}` : ''}<br>
+                    ${cart.accessories.map(acc => `• ${acc.name}`).join('<br>')}
+                </div>
+                <p style="color: #aaa; font-size: 14px;">You'll receive a confirmation email shortly. Estimated delivery: 2-3 business days.</p>
+                <button onclick="completeOrder()" style="background: #ff0037; border: none; color: white; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer;">
+                    Continue to Account Setup
+                </button>
+            `);
+        }
+        
+        function completeOrder() {
+            // Mark as purchased and return to main app
+            localStorage.setItem('verizonPurchased', 'true');
+            window.location.href = 'index.html?purchased=true';
+        }
+        
+        function goBack() {
+            // Save current cart state
+            localStorage.setItem('verizonCart', JSON.stringify(cart));
+            window.location.href = 'index.html';
+        }
+        
+        // Product detail functions
+        function showPlanDetails(planId) {
+            const planDetails = {
+                'unlimited-plus': {
+                    title: '5G Unlimited Plus',
+                    features: [
+                        '🚀 Unlimited 5G Ultra Wideband access',
+                        '📺 Premium streaming (Netflix, Disney+, Hulu)',
+                        '🔥 50GB mobile hotspot',
+                        '🌍 International calling to 200+ countries',
+                        '☁️ 50GB cloud storage included',
+                        '🎵 Apple Music included (6 months)'
+                    ]
+                },
+                'unlimited-welcome': {
+                    title: '5G Unlimited Welcome',
+                    features: [
+                        '📶 Unlimited 5G nationwide',
+                        '📱 Basic streaming quality',
+                        '📡 5GB mobile hotspot',
+                        '📞 Standard customer support',
+                        '🛡️ Basic security features',
+                        '💰 Most affordable unlimited option'
+                    ]
+                },
+                'unlimited-ultimate': {
+                    title: '5G Unlimited Ultimate',
+                    features: [
+                        '⚡ Unlimited 5G Ultra Wideband priority',
+                        '🎬 Premium streaming + 4K quality',
+                        '🔥 100GB mobile hotspot',
+                        '🌎 International calling + data',
+                        '☁️ 1TB cloud storage included',
+                        '🏆 Priority customer support',
+                        '🛡️ Advanced security suite'
+                    ]
+                }
+            };
+            
+            const plan = planDetails[planId];
+            showModal(`
+                <h3 style="color: #ff0037; margin-bottom: 20px;">${plan.title}</h3>
+                <div style="text-align: left;">
+                    ${plan.features.map(feature => `<div style="margin: 10px 0; padding: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 5px;">${feature}</div>`).join('')}
+                </div>
+                <button onclick="closeModal()" style="background: #ff0037; border: none; color: white; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer;">
+                    Got it!
+                </button>
+            `);
+        }
+        
+        function showAccessoryDetails(accessoryId) {
+            const accessoryDetails = {
+                'wall-mount': {
+                    title: 'Wall Mounting Bracket',
+                    description: 'Professional-grade mounting solution for optimal 5G signal reception.',
+                    features: ['Adjustable positioning', 'Cable management', 'Easy installation', 'Durable materials']
+                },
+                'ethernet-cable': {
+                    title: 'Ethernet Cable (25ft)',
+                    description: 'High-speed Cat 6 cable for direct wired connections.',
+                    features: ['Gigabit speeds', '25-foot length', 'Gold-plated connectors', 'Future-proof design']
+                },
+                'range-extender': {
+                    title: '5G Range Extender',
+                    description: 'Extend your 5G coverage throughout your home.',
+                    features: ['Mesh network support', 'Easy app setup', 'Seamless roaming', 'Wi-Fi 6E compatible']
+                },
+                'protection-plan': {
+                    title: 'Device Protection',
+                    description: 'Complete protection for your 5G router and accessories.',
+                    features: ['Same-day replacement', 'Accidental damage coverage', '24/7 support', 'No deductible']
+                },
+                'premium-support': {
+                    title: 'Premium Support',
+                    description: 'VIP customer service with priority assistance.',
+                    features: ['Priority phone support', 'White-glove setup', 'Advanced troubleshooting', 'Dedicated account manager']
+                },
+                'cloud-storage': {
+                    title: 'Verizon Cloud (1TB)',
+                    description: 'Secure cloud storage for all your devices.',
+                    features: ['1TB storage space', 'Auto device backup', 'Cross-platform access', 'Advanced security']
+                }
+            };
+            
+            const accessory = accessoryDetails[accessoryId];
+            showModal(`
+                <h3 style="color: #ff0037; margin-bottom: 20px;">${accessory.title}</h3>
+                <p style="margin-bottom: 20px; color: #ccc;">${accessory.description}</p>
+                <div style="text-align: left;">
+                    <strong>Features:</strong>
+                    ${accessory.features.map(feature => `<div style="margin: 8px 0; padding: 5px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">• ${feature}</div>`).join('')}
+                </div>
+                <button onclick="closeModal()" style="background: #ff0037; border: none; color: white; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer;">
+                    Got it!
+                </button>
+            `);
+        }
+        
+        function showModal(content) {
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('detail-modal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('detail-modal').style.display = 'none';
+        }
+        
+        function showFeedback(message) {
+            // Create temporary feedback element
+            const feedback = document.createElement('div');
+            feedback.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #ff0037;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 1001;
+                font-weight: 600;
+                box-shadow: 0 5px 20px rgba(255, 0, 55, 0.4);
+            `;
+            feedback.textContent = message;
+            
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.remove();
+            }, 3000);
+        }
+        
+        // Handle modal clicks outside content
+        document.getElementById('detail-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

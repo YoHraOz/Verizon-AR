@@ -1127,19 +1127,19 @@
             switch(state) {
                 case 'scanning':
                     // Hide scan button during scanning, keep AR button
-                    scanRouterBtn.style.display = 'none';
-                    tryArBtn.style.display = 'flex';
+                    if (scanRouterBtn) scanRouterBtn.style.display = 'none';
+                    if (tryArBtn) tryArBtn.style.display = 'flex';
                     break;
                 case 'ar-active':
                     // Hide both buttons when AR experience is active
-                    scanRouterBtn.style.display = 'none';
-                    tryArBtn.style.display = 'none';
+                    if (scanRouterBtn) scanRouterBtn.style.display = 'none';
+                    if (tryArBtn) tryArBtn.style.display = 'none';
                     break;
                 case 'idle':
                 default:
                     // Show both buttons in default state
-                    scanRouterBtn.style.display = 'flex';
-                    tryArBtn.style.display = 'flex';
+                    if (scanRouterBtn) scanRouterBtn.style.display = 'flex';
+                    if (tryArBtn) tryArBtn.style.display = 'flex';
                     break;
             }
         }
